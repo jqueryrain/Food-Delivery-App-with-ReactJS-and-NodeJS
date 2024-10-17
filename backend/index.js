@@ -3,6 +3,7 @@ const express = require("express")
 const app = express()
 const cors = require('cors')
 const cookie_parser = require('cookie-parser')
+const AdminRoutes = require('./routes/admin.routes')
 const siteRoutes = require('./routes/site.routes')
 
 
@@ -10,8 +11,12 @@ const siteRoutes = require('./routes/site.routes')
 app.use(cors())
 app.use(cookie_parser())
 app.use(express.json())
+app.use('/uploads', express.static('uploads'))
 app.use(express.urlencoded({ extended: false }))
 
-
+// Routes
+app.use('/admin/api', AdminRoutes)
 app.use('/api', siteRoutes)
+
+
 app.listen(3000, () => console.log('Running!'))

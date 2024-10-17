@@ -1,11 +1,11 @@
 import React from 'react'
 
-function Menu() {
+function Admin() {
     return (
         <div>
-            <h1>Menu</h1>
+            <h1>Hello From Admin</h1>
         </div>
     )
 }
 
-export default Menu
+export default Admin

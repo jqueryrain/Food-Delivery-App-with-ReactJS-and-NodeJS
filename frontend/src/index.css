@@ -3,6 +3,10 @@
     margin: 0;
     box-sizing: border-box;
 }
+html,#root{
+    height: 100vh;
+}
+
 
 ul {
     list-style: none;
@@ -15,7 +19,8 @@ span {
     text-decoration: none;
     display: inline-block;
 }
-p{
+
+p {
     margin-bottom: 0;
 }
 
@@ -25,22 +30,25 @@ button {
     background: none;
 }
 
-.divider{
+.divider {
     border-radius: 20px;
     width: 100%;
     height: 1px;
     margin: 30px 0;
     background: grey;
 }
-.createUser{
+
+.createUser {
     color: #fff;
     background: #ff4b24;
-    &:hover{
+
+    &:hover {
         color: #fff;
         background: #ff4b24;
     }
 }
-.loginbtn{
+
+.loginbtn {
     color: #ff4b24;
 }
 
@@ -82,6 +90,7 @@ button {
 .active {
     color: #ff4b24;
 }
+
 
 /* Banner */
 #banner {
@@ -141,25 +150,29 @@ button {
 }
 
 /* top dishes */
-.dishes{
+.dishes {
     box-shadow: 3px 3px 20px lightgray;
     border-radius: 20px;
     cursor: pointer;
     transform: scale(1);
     transition: all .4s;
-    &:hover{
+
+    &:hover {
         transform: scale(1.05);
     }
-    .dish_img{
+
+    .dish_img {
         width: 100%;
         position: relative;
-        & img{
+
+        & img {
             border-radius: 20px 20px 0 0;
             width: 100%;
             height: auto;
             object-fit: cover;
         }
-        .add{
+
+        .add {
             width: 40px;
             height: 40px;
             position: absolute;
@@ -168,32 +181,72 @@ button {
             cursor: pointer;
         }
     }
-    & h3{
+
+    & h3 {
         font-size: 1.2rem;
     }
-    & p{
+
+    & p {
         color: grey;
         font-size: 0.8rem;
         margin-bottom: 10px;
     }
-    .price{
+
+    .price {
         font-size: 1.1rem;
         font-weight: 700;
         color: #ff4b24;
     }
 }
+
 /* footer */
-#footer{
+#footer {
     background: #323232;
     margin-top: 50px;
-    .desc{
+
+    .desc {
         font-size: 0.9rem;
     }
-    & ul li img{
+
+    & ul li img {
         width: 35px;
         height: 35px;
     }
-    .footer-links{
+
+    .footer-links {
         color: grey;
     }
+}
+
+/* Admin Sidebar */
+#Admin-content {
+    height: 100%;
+}
+
+#sidebar {
+    padding: 20px 30px;
+    height: 100%;
+
+    .link {
+        color: #000;
+        transition: all .4s;
+
+        &:hover {
+            color: #ff4b24;
+        }
+    }
+}
+
+#img-container {
+    width: 200px;
+    height: auto;
+}
+
+.category-list-img{
+    width: 80px;
+    height: 80px;
+}
+
+.table-list td{
+    align-content: center;
 }

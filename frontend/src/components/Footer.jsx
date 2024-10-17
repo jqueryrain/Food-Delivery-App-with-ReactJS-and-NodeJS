@@ -30,9 +30,6 @@ function Footer() {
                                     <Link to="/" className='footer-links'>Home</Link>
                                 </li>
                                 <li>
-                                    <Link to="/menu" className='footer-links'>Menu</Link>
-                                </li>
-                                <li>
                                     <Link to="/about" className='footer-links'>About Us</Link>
                                 </li>
                                 <li>
