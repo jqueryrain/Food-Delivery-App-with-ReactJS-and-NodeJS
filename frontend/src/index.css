@@ -3,9 +3,7 @@
     margin: 0;
     box-sizing: border-box;
 }
-html,#root{
-    height: 100vh;
-}
+
 
 
 ul {
@@ -28,6 +26,9 @@ button {
     cursor: pointer;
     border: none;
     background: none;
+}
+html,#root{
+    height: 100% ;
 }
 
 .divider {
@@ -219,10 +220,9 @@ button {
 }
 
 /* Admin Sidebar */
-#Admin-content {
+#Admin-content{
     height: 100%;
 }
-
 #sidebar {
     padding: 20px 30px;
     height: 100%;
@@ -239,7 +239,10 @@ button {
 
 #img-container {
     width: 200px;
-    height: auto;
+    height: 120px;
+    & img{
+        object-fit: contain;
+    }
 }
 
 .category-list-img{

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Outlet } from 'react-router-dom'
 import Header from './components/Admin/Header'
-import Sidebar from './components/Admin/sidebar'
+import Sidebar from './components/Admin/Sidebar'
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
 

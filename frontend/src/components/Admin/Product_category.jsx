@@ -4,6 +4,7 @@ import axios from 'axios'
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
 import CategoryList from './CategoryList';
+import CategoryContext from '../../contexts/CategoryContext';
 
 
 
@@ -11,9 +12,17 @@ function Product_category() {
     const [showImg, setImage] = useState(`${assets.upload_img}`)
     const [data, setData] = useState([])
     const [state, setState] = useState(false)
-    const [getData,setCategoryData]= useState({})
+    const [checkupdatedImg, setupdatedImg] = useState(false)
+    const [CategoryData, setCategoryData] = useState({
+        category_name: '',
+        category_image: ''
+    })
 
-    console.log(getData)
+    useEffect(() => {
+        if (CategoryData.category_image != '') {
+            setImage(`http://localhost:3000/uploads/product_category_images/${CategoryData.category_image}`)
+        }
+    }, [CategoryData])
 
 
     // Handle Preview Image
@@ -23,11 +32,12 @@ function Product_category() {
             const reader = new FileReader()
             reader.onload = () => setImage(reader.result)
             reader.readAsDataURL(file)
+            if (CategoryData.category_image != '') setupdatedImg(true)
         }
     }
 
     // Handle submit Form Data
-    const handelcategorySubmit = async (e) => {
+    const handelcategorySubmit = useCallback(async (e) => {
         e.preventDefault()
         const formData = new FormData(e.target)
         formData.append('category_image', showImg)
@@ -38,82 +48,86 @@ function Product_category() {
             e.target.reset()
             setState(true)
         }
+    }, [])
+
+
+    const handleupdatecategory = async (e) => {
+        e.preventDefault()
+        const id = CategoryData._id;
+        const formData = new FormData(e.target)
+        if (checkupdatedImg == true) formData.append('category_image', showImg)
+        const response = await axios.put(`http://localhost:3000/admin/api/product/category/${id}`, formData)
+        if (response.data.message == 'update successful!') {
+            toast.success(response.data.message)
+            setState(true)
+        } else {
+            toast.error(response.data.message)
+        }
     }
-    const handlegetcategoryData = async (id) => {
-        const response = await axios.get(`http://localhost:3000/admin/api/product/category/${id}`)
-        // setCategoryData(response.data)
+    const reset = () => {
+        setCategoryData({ category_image: '' })
+        setImage(`${assets.upload_img}`)
+        setState(false)
     }
 
+    setTimeout(() => { setState(false) }, 300)
     useEffect(() => {
-        const fetchData = async () => {
+        const fetchCategories = async () => {
             const response = await axios.get('http://localhost:3000/admin/api/get/product/category')
             setData(response.data)
-            if (response.data.message == 'Not Found') setData([])
+            if (response.data.message) setData([])
         }
-        fetchData()
+        fetchCategories()
     }, [state])
 
     return (
         <>
             <div className="row m-5">
                 <div className="col-md-6">
-                    <form onSubmit={handelcategorySubmit}>
+                    <form onSubmit={CategoryData.category_image != '' ? handleupdatecategory : handelcategorySubmit} encType="multipart/form-data">
                         <div className="form-group">
                             <p className='mb-3'>Category Image</p>
                             <label htmlFor="category_img" id='img-container'>
-                                <img src={showImg} alt="" id='showImg' className='w-100 h-100' />
+                                <img src={showImg}
+                                    alt=""
+                                    id='showImg'
+                                    loading='lazy'
+                                    className='w-100 h-100' />
                             </label>
                             <input type="file"
                                 name="category_image"
                                 id="category_img"
                                 onChange={handleImageUpload}
-                                hidden required />
+                                hidden />
                         </div>
                         <div className="form-group mt-3">
                             <label htmlFor="category"
                                 className='form-label'>
-                                Enter Product Category
+                                {CategoryData.category_image != '' ? 'update Product Category' : 'Enter Product Category'}
                             </label>
                             <input type="text"
                                 name='category_name'
+                                defaultValue={CategoryData.category_name}
                                 className="form-control"
                                 id='category' />
+                        </div>
+                        <div className="d-flex gap-3">
                             <button type='sumbit'
-                                className='btn btn-dark mt-3 swalDefaultSuccess'
-                            >Add Category</button>
+                                className='btn btn-dark mt-3 px-2'>
+                                {CategoryData.category_image != '' ? 'update' : 'Add Category'}
+                            </button>
                         </div>
                     </form>
+                    <button
+                        type='button'
+                        onClick={() => reset()}
+                        className='btn btn-dark mt-3 px-2'>
+                        Reset</button>
                 </div>
-            </div>
-            {/* // Category List */}
-            <div className="row">
-                <div className="col-12">
-                    <table className='table table-striped'>
-                        <thead>
-                            <tr>
-                                <th>s.no</th>
-                                <th>Category Image</th>
-                                <th>Category Name</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {
-                                data.map((data, i) => (
-                                    <CategoryList
-                                        key={i}
-                                        index={i}
-                                        state={setState}
-                                        getData={setCategoryData}
-                                        id={data._id}
-                                        category_name={data.category_name}
-                                        category_image={data.category_image} />
-                                ))
-                            }
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+            </div >
+            <CategoryContext.Provider value={{ data, setState, setCategoryData, setupdatedImg }} >
+                <CategoryList />
+            </CategoryContext.Provider>
         </>
     )
 }

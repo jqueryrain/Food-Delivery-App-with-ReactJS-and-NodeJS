@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 
 function Sidebar() {
     return (
-        <div id="sidebar" className='w-100 h-100 bg-light bg-gradient border-end border-dark'>
+        <div id="sidebar" className='w-100 bg-light bg-gradient border-end border-dark'>
             <ul className='d-flex flex-column gap-3'>
                 <li>
                     <Link to='/admin' className='link'>Home</Link>

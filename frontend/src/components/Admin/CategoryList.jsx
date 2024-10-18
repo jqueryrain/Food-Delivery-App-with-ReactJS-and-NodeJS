@@ -1,41 +1,72 @@
 import axios from 'axios'
+import { useContext } from 'react';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
+import CategoryContext from '../../contexts/CategoryContext';
 
-function CategoryList(props) {
+function CategoryList() {
+    const { data, setState, setCategoryData,setupdatedImg } = useContext(CategoryContext)
+
     const handledeletecategory = async (id) => {
         const response = await axios.delete(`http://localhost:3000/admin/api/product/category/${id}`)
-        toast.success(response.data.message)
-        props.state(false)
+        if (response.data.message == 'Successfully deleted!') {
+            toast.success(response.data.message)
+            setState(true)
+        }
     }
 
+    const handlegetUpdateData = async (id) => {
+        const response = await axios.get(`http://localhost:3000/admin/api/product/category/${id}`)
+        setCategoryData(response.data)
+        setupdatedImg(false)
+    }
 
     return (
-        <tr className='table-list'>
-            <td>{props.index + 1}</td>
-            <td>
-                <img
-                    className='category-list-img'
-                    src={`http://localhost:3000/uploads/product_category_images/${props.category_image}`}
-                    alt="" loading='lazy' />
-            </td>
-            <td>
-                {props.category_name}
-            </td>
-            <td>
-                <div className="d-flex gap-2">
-                    <button type='button'
-                        className='btn  btn-primary'>
-                        Edit
-                    </button>
-                    <button type='button'
-                        onClick={() => handledeletecategory(`${props.id}`)}
-                        className='btn  btn-danger'>
-                        Delete
-                    </button>
-                </div>
-            </td>
-        </tr>
+        <div className="row">
+            <div className="col-12">
+                <table className='table table-striped'>
+                    <thead>
+                        <tr>
+                            <th>s.no</th>
+                            <th>Category Image</th>
+                            <th>Category Name</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {(data.map((category, i) => (
+                            <tr key={i} className='table-list'>
+                                <td>{i + 1}</td>
+                                <td>
+                                    <img
+                                        className='category-list-img'
+                                        src={`http://localhost:3000/uploads/product_category_images/${category.category_image}`}
+                                        alt="" loading='lazy' />
+                                </td>
+                                <td>
+                                    {category.category_name}
+                                </td>
+                                <td>
+                                    <div className="d-flex gap-2">
+                                        <button type='button'
+                                            onClick={() => handlegetUpdateData(category._id)}
+                                            className='btn  btn-primary'>
+                                            Edit
+                                        </button>
+                                        <button type='button'
+                                            onClick={() => handledeletecategory(category._id)}
+                                            className='btn  btn-danger'>
+                                            Delete
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        ))
+                        )}
+                    </tbody>
+                </table>
+            </div>
+        </div>
     )
 }
 
