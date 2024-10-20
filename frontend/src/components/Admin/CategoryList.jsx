@@ -1,11 +1,10 @@
 import axios from 'axios'
-import { useContext } from 'react';
-import { toast } from 'react-toastify';
+import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import CategoryContext from '../../contexts/CategoryContext';
+import {useCategoryContext} from '../../contexts/CategoryContext'
 
 function CategoryList() {
-    const { data, setState, setCategoryData,setupdatedImg } = useContext(CategoryContext)
+    const { data, setState, setCategoryData,setupdatedImg } = useCategoryContext()
 
     const handledeletecategory = async (id) => {
         const response = await axios.delete(`http://localhost:3000/admin/api/product/category/${id}`)

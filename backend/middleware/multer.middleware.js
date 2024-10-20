@@ -12,7 +12,7 @@ const createstorage = (dir) => multer.diskStorage({
     fileFilter: (req, file, cb) => {
         const ext = path.extname(file.originalname)
         if (ext !== '.jpg' || ext !== '.png') {
-            return cb(res.status(400).end('only jpg, png are allowed'), false);
+            return cb(res.status(400).end('only jpg, png are allowed'), false)
         }
         cb(null, true)
     }
@@ -21,5 +21,6 @@ const createstorage = (dir) => multer.diskStorage({
 
 
 const categoryImage = multer({ storage: createstorage('product_category_images') })
+const productImage = multer({ storage: createstorage('productImages') })
 
-module.exports = { categoryImage };
+module.exports = { categoryImage, productImage }

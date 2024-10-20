@@ -1,5 +1,7 @@
-import { createContext } from "react"
-const CategoryContext = createContext()
+import { createContext, useContext } from "react"
 
-export default CategoryContext
-
+export const CategoryContext = createContext()
+export const CategoryContextProvider = CategoryContext.Provider
+export const useCategoryContext = () => {
+    return useContext(CategoryContext)
+}

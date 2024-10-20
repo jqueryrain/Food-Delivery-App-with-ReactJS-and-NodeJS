@@ -4,7 +4,7 @@ import axios from 'axios'
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
 import CategoryList from './CategoryList';
-import CategoryContext from '../../contexts/CategoryContext';
+import { CategoryContextProvider } from '../../contexts/CategoryContext';
 
 
 
@@ -50,7 +50,7 @@ function Product_category() {
         }
     }, [])
 
-
+    // Handle the updation of product category
     const handleupdatecategory = async (e) => {
         e.preventDefault()
         const id = CategoryData._id;
@@ -65,7 +65,7 @@ function Product_category() {
         }
     }
     const reset = () => {
-        setCategoryData({ category_image: '' })
+        setCategoryData({ category_image: '', category_name: '' })
         setImage(`${assets.upload_img}`)
         setState(false)
     }
@@ -86,7 +86,7 @@ function Product_category() {
                 <div className="col-md-6">
                     <form onSubmit={CategoryData.category_image != '' ? handleupdatecategory : handelcategorySubmit} encType="multipart/form-data">
                         <div className="form-group">
-                            <p className='mb-3'>Category Image</p>
+                            <p className='mb-3 fw-bold'>Category Image</p>
                             <label htmlFor="category_img" id='img-container'>
                                 <img src={showImg}
                                     alt=""
@@ -102,7 +102,7 @@ function Product_category() {
                         </div>
                         <div className="form-group mt-3">
                             <label htmlFor="category"
-                                className='form-label'>
+                                className='form-label fw-bold'>
                                 {CategoryData.category_image != '' ? 'update Product Category' : 'Enter Product Category'}
                             </label>
                             <input type="text"
@@ -125,12 +125,11 @@ function Product_category() {
                         Reset</button>
                 </div>
             </div >
-            <CategoryContext.Provider value={{ data, setState, setCategoryData, setupdatedImg }} >
+            <CategoryContextProvider value={{ data, setState, setCategoryData, setupdatedImg }} >
                 <CategoryList />
-            </CategoryContext.Provider>
+            </CategoryContextProvider>
         </>
     )
 }
-
 
 export default Product_category

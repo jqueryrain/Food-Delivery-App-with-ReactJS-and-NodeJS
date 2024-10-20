@@ -1,7 +1,15 @@
-import React from 'react'
-import { menu_list } from '../assets/images/assets'
+import React, { useEffect, useState } from 'react'
+import axios from 'axios'
 
 function Explore_menu() {
+    const [menu_list, setMenu] = useState([])
+    useEffect(() => {
+        const fetchproCategories = async () => {
+            const categories = await axios.get('http://localhost:3000/admin/api/get/product/category')
+            setMenu(categories.data)
+        }
+        fetchproCategories()
+    }, [])
     return (
         <div id='Explore_menu' className='container'>
             <div className="row">
@@ -17,10 +25,12 @@ function Explore_menu() {
                             menu_list.map((menu, i) => (
                                 <div className='menu w-100 d-flex flex-column align-items-center' key={i}>
                                     <div className='menu_img mb-2'>
-                                        <img src={menu.menu_image} alt="" />
+                                        <img
+                                            src={`http://localhost:3000/uploads/product_category_images/${menu.category_image}`}
+                                            alt="" loading='lazy' />
                                     </div>
                                     <p className='menu_name text-center'>
-                                        {menu.menu_name}
+                                        {menu.category_name}
                                     </p>
                                 </div>
                             ))

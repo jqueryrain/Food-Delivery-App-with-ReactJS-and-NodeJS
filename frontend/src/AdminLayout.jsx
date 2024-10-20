@@ -1,12 +1,14 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Outlet } from 'react-router-dom'
 import Header from './components/Admin/Header'
 import Sidebar from './components/Admin/Sidebar'
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
+import { ProductContextProvider } from './contexts/ProductContext';
 
 
 function AdminLayout() {
+    const [products, setproducts] = useState([])
     return (
         <>
             <ToastContainer />
@@ -17,7 +19,9 @@ function AdminLayout() {
                         <Sidebar />
                     </div>
                     <div className="col-md-10 h-100">
-                        <Outlet />
+                        <ProductContextProvider value={{ products, setproducts }}>
+                            <Outlet />
+                        </ProductContextProvider>
                     </div>
                 </div>
             </div>
