@@ -15,7 +15,7 @@ function Sidebar() {
                     <Link to='/admin/add/food' className='link'>Add Item</Link>
                 </li>
                 <li>
-                    <Link to='/admin/view/food' className='link'>View Items</Link>
+                    <Link to='/admin/view/items' className='link'>View Items</Link>
                 </li>
                 <li>
                     <Link to='/admin/food/orders' className='link'>Orders</Link>

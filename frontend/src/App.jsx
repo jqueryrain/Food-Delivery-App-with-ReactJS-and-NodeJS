@@ -7,6 +7,7 @@ import Admin from './pages/Admin'
 import AdminLayout from './AdminLayout'
 import Product_category from './components/Admin/Product_category'
 import AddFood from './components/Admin/AddFood'
+import ViewItems from './components/Admin/ViewItems'
 
 function App() {
   const router = createBrowserRouter([
@@ -43,6 +44,10 @@ function App() {
         {
           path: '/admin/add/food',
           element: <AddFood />
+        },
+        {
+          path: '/admin/view/items',
+          element: <ViewItems />
         }
       ]
     }

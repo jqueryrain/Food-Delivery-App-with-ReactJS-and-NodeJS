@@ -5,10 +5,13 @@ import Sidebar from './components/Admin/Sidebar'
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
 import { ProductContextProvider } from './contexts/ProductContext';
+import Modal from './components/Admin/Modal';
 
 
 function AdminLayout() {
-    const [products, setproducts] = useState([])
+    const [product, setproduct] = useState({})
+    const [updateproductImg, setupdateproductImg] = useState('')
+
     return (
         <>
             <ToastContainer />
@@ -19,8 +22,9 @@ function AdminLayout() {
                         <Sidebar />
                     </div>
                     <div className="col-md-10 h-100">
-                        <ProductContextProvider value={{ products, setproducts }}>
+                        <ProductContextProvider value={{ product, setproduct, updateproductImg, setupdateproductImg }}>
                             <Outlet />
+                            <Modal />
                         </ProductContextProvider>
                     </div>
                 </div>

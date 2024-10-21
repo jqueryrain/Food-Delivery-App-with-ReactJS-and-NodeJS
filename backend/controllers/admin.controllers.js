@@ -66,6 +66,7 @@ module.exports = {
             if (req.file?.filename) {
                 const findcategory = await product_category.findOne({ _id: new mongoose.Types.ObjectId(req.params.id) })
                 deleteImg(`product_category_images/${findcategory.category_image}`)
+                if (!findcategory.category_image) return;
             }
             // update product category
             const data = await product_category.findByIdAndUpdate(
@@ -98,8 +99,101 @@ module.exports = {
             return res.status(201).json({ message: 'Successfull!' })
         } catch (error) {
             deleteImg(`productImages/${req.file?.filename}`)
-            res.json({ message: 'Unsuccessfull!' })
             console.log('createProduct : ' + error.message)
+            return res.json({ message: 'Unsuccessfull!' })
+        }
+    },
+    getAllProductData: async (req, res) => {
+        try {
+            const data = await productModel.aggregate([
+                {
+                    $lookup: {
+                        from: 'product_categories',
+                        localField: 'product_category_id',
+                        foreignField: '_id',
+                        as: 'product_category'
+                    }
+                },
+                { $unwind: '$product_category' },
+                {
+                    $project: {
+                        'product_category.category_image': 0,
+                        'product_category._id': 0
+                    }
+                }
+            ])
+            if (data.length == 0 || !data) return res.status(204).json({ message: 'Not Found' })
+            return res.status(200).json(data)
+        } catch (error) {
+            console.log('getAllProductData : ' + error.message)
+        }
+    },
+    deleteProduct: async (req, res) => {
+        try {
+            const existingProduct = await productModel.findOne({ _id: new mongoose.Types.ObjectId(req.params.id) })
+            deleteImg(`productImages/${existingProduct.product_image}`)
+            const data = await productModel.deleteOne({ _id: new mongoose.Types.ObjectId(req.params.id) })
+            if (!data) return res.status(204).json({ message: 'Failed!' })
+            return res.status(200).json({ message: 'Successfully Deleted!' })
+        } catch (error) {
+            console.log('deleteProduct : ' + error.message)
+        }
+    },
+    getSingleProduct: async (req, res) => {
+        try {
+            const data = await productModel.aggregate([
+                {
+                    $match: {
+                        _id: new mongoose.Types.ObjectId(req.params.id)
+                    }
+                },
+                {
+                    $lookup: {
+                        from: 'product_categories',
+                        localField: 'product_category_id',
+                        foreignField: '_id',
+                        as: 'product_category'
+                    }
+                },
+                { $unwind: '$product_category' },
+                {
+                    $project: {
+                        'product_category.category_image': 0,
+                    }
+                }
+            ])
+            if (!data) return res.status(204).json({ message: 'Not Found' })
+            return res.status(200).json(data)
+        } catch (error) {
+            console.log('getSingleProduct : ' + error.message)
+        }
+    },
+    updateProduct: async (req, res) => {
+        try {
+            const { product_name, product_category_id, product_description, product_price } = req.body;
+            if (req.file?.filename) {
+                const existingProduct = await productModel.findOne({ _id: new mongoose.Types.ObjectId(req.params.id) })
+                deleteImg(`productImages/${existingProduct?.product_image}`)
+                if (!existingProduct.product_image) return;
+            }
+
+            // update  product
+            const data = await productModel.findByIdAndUpdate(
+                { _id: new mongoose.Types.ObjectId(req.params.id) },
+                {
+                    product_name,
+                    product_category_id: new mongoose.Types.ObjectId(product_category_id),
+                    product_description,
+                    product_image: req.file?.filename,
+                    product_price
+                },
+                { new: true }
+            )
+            if (!data) return res.status(204).json({ message: 'Failed!' })
+            return res.status(200).json({ message: 'Successfully updated!' })
+        } catch (error) {
+            deleteImg(`productImages/${req.file?.filename}`)
+            console.log('updateProduct : ' + error.message)
         }
     }
 }

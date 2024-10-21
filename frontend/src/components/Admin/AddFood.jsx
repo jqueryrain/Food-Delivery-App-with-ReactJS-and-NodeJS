@@ -7,7 +7,6 @@ import * as Yup from 'yup'
 
 function AddFood() {
     const [menu_list, setMenu] = useState([])
-    const [isselected, setselected] = useState(true)
     const [showImg, setImage] = useState(`${assets.upload_img}`)
 
     const handleImageUpload = (e) => {

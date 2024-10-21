@@ -12,6 +12,10 @@ router.route('/product/category/:id?')
     .put(categoryImage.single('category_image'), productConttrollers.updateCategory)
 
 // Routes for Product
+router.get('/get/products', productConttrollers.getAllProductData)
 router.route('/product/:id?')
+    .get(productConttrollers.getSingleProduct)
     .post(productImage.single('product_image'), productConttrollers.createProduct)
+    .put(productImage.single('product_image'),productConttrollers.updateProduct)
+    .delete(productConttrollers.deleteProduct)
 module.exports = router
