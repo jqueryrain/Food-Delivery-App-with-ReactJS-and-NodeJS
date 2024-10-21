@@ -17,6 +17,7 @@ import menu_8 from './menu_8.png'
 
 import food_11 from './food_11.png'
 
+import aboutUs from './2668382.jpg'
 import add_icon_white from './add_icon_white.png'
 import add_icon_green from './add_icon_green.png'
 import remove_icon_red from './remove_icon_red.png'
@@ -34,6 +35,7 @@ import logout_icon from './logout_icon.png'
 import parcel_icon from './parcel_icon.png'
 
 export const assets = {
+    aboutUs,
     bars,
     upload_img,
     profile_image,
@@ -55,6 +57,7 @@ export const assets = {
     profile_icon,
     logout_icon,
     bag_icon,
+    menu_1,
     parcel_icon
 }
 

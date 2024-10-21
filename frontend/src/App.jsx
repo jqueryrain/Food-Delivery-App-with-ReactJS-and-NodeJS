@@ -8,6 +8,7 @@ import AdminLayout from './AdminLayout'
 import Product_category from './components/Admin/Product_category'
 import AddFood from './components/Admin/AddFood'
 import ViewItems from './components/Admin/ViewItems'
+import Product_Cart from './pages/Product_Cart'
 
 function App() {
   const router = createBrowserRouter([
@@ -26,6 +27,10 @@ function App() {
         {
           path: '/contact',
           element: <Contact />
+        },
+        {
+          path: '/cart',
+          element: <Product_Cart />
         }
       ]
     },

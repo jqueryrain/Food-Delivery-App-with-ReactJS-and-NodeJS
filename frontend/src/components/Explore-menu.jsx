@@ -1,11 +1,23 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
+import { useDishContext } from '../contexts/DishesContext'
+import { assets } from '../assets/images/assets'
 
 function Explore_menu() {
+    const { setproducts, fetchProducts } = useDishContext()
     const [menu_list, setMenu] = useState([])
+
+    const getProductbyCategory = async (id) => {
+        setproducts([])
+        const response = await axios.get(`http://localhost:3000/api/get/products/by/category/${id}`)
+        setproducts(response.data.categoryproducts)
+    }
+
+    const getAllProducts = () => { fetchProducts() }
+
     useEffect(() => {
         const fetchproCategories = async () => {
-            const categories = await axios.get('http://localhost:3000/admin/api/get/product/category')
+            const categories = await axios.get('http://localhost:3000/api/get/product/category')
             setMenu(categories.data)
         }
         fetchproCategories()
@@ -21,9 +33,23 @@ function Explore_menu() {
             <div className="row">
                 <div className="col-12">
                     <div className='d-flex gap-3 justify-content-between mt-4'>
+                        <div className='menu w-100 d-flex flex-column align-items-center'
+                            onClick={() => getAllProducts()}
+                        >
+                            <div className='menu_img mb-2'>
+                                <img
+                                    src={assets.menu_1}
+                                    alt="" loading='lazy' />
+                            </div>
+                            <p className='menu_name text-center'>
+                                All
+                            </p>
+                        </div>
                         {
                             menu_list.map((menu, i) => (
-                                <div className='menu w-100 d-flex flex-column align-items-center' key={i}>
+                                <div className='menu w-100 d-flex flex-column align-items-center'
+                                    onClick={() => getProductbyCategory(menu._id)}
+                                    key={i}>
                                     <div className='menu_img mb-2'>
                                         <img
                                             src={`http://localhost:3000/uploads/product_category_images/${menu.category_image}`}

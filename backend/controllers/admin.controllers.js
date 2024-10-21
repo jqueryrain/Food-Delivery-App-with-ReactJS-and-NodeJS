@@ -122,7 +122,7 @@ module.exports = {
                     }
                 }
             ])
-            if (data.length == 0 || !data) return res.status(204).json({ message: 'Not Found' })
+            if (data.length == 0) return res.status(204).json({ message: 'Not Found' })
             return res.status(200).json(data)
         } catch (error) {
             console.log('getAllProductData : ' + error.message)

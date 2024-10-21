@@ -1,5 +1,5 @@
 import React from 'react'
-import { NavLink } from 'react-router-dom'
+import { NavLink,Link } from 'react-router-dom'
 import { assets } from '../assets/images/assets'
 
 const Navbar = () => {
@@ -37,10 +37,9 @@ const Navbar = () => {
                 <div className="col-md-4 d-none d-md-block align-content-center">
                     <ul className='d-flex gap-4 float-end'>
                         <li>
-                            <img src={assets.search_icon} className='nav-icons' alt="" />
-                        </li>
-                        <li>
-                            <img src={assets.basket_icon} className='nav-icons' alt="" />
+                            <Link to='/cart'>
+                                <img src={assets.basket_icon} className='nav-icons' alt="" />
+                            </Link>
                         </li>
                         <li>
                             <button type='buton'

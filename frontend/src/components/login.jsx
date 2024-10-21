@@ -1,5 +1,5 @@
 import axios from 'axios'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useState } from 'react'
 import * as Yup from 'yup'
 
@@ -44,7 +44,6 @@ function Login() {
         }
     }
     setTimeout(() => setModal(true), 800)
-
     return (
         <>
             {showModal && (<div className="modal fade" id="loginModal" tabIndex="1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -63,7 +62,7 @@ function Login() {
                                     onChange={(e) => { getData({ ...data, email: e.target.value }) }} />
                                 {errors.email && <div className="alert alert-danger mt-3 py-1" role="alert"> {errors.email} </div>}
 
-                                <input type="text"
+                                <input type="password"
                                     placeholder='Your password'
                                     className='form-control'
                                     required

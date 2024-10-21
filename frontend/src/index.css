@@ -27,8 +27,10 @@ button {
     border: none;
     background: none;
 }
-html,#root{
-    height: 100% ;
+
+html,
+#root {
+    height: 100%;
 }
 
 .divider {
@@ -69,6 +71,7 @@ html,#root{
     width: 40px;
     height: 40px;
 }
+
 
 .nav-icons {
     width: 20px;
@@ -145,12 +148,18 @@ html,#root{
                 width: 100%;
                 height: auto;
                 object-fit: cover;
+                transition: all .5s;
+
+                &:hover {
+                    filter: drop-shadow(0 0 10px #ff4b24);
+                }
             }
         }
     }
 }
 
 /* top dishes */
+
 .dishes {
     box-shadow: 3px 3px 20px lightgray;
     border-radius: 20px;
@@ -163,6 +172,7 @@ html,#root{
     }
 
     .dish_img {
+        overflow: hidden;
         width: 100%;
         position: relative;
 
@@ -173,13 +183,47 @@ html,#root{
             object-fit: cover;
         }
 
-        .add {
-            width: 40px;
-            height: 40px;
+        .quntitybtn {
             position: absolute;
             right: 10px;
             bottom: 10px;
+        }
+
+        .productCart {
+            float: right;
+            transform: translateX(130%);
+            width: 40%;
+            padding: 4px 10px;
+            display: flex;
+            justify-content: space-between;
+            border-radius: 20px;
+            background: #fff;
+            transition: all .3s;
+
+            & button img {
+                width: 25px;
+                height: 25px;
+            }
+
+            & input {
+                padding-inline: 10px;
+                border: 0;
+                width: 100%;
+            }
+        }
+
+        .add {
+            position: absolute;
+            right: 0px;
+            bottom: 0px;
+            width: 40px;
+            height: 40px;
             cursor: pointer;
+            transition: all .3s;
+
+            &:hover {
+                filter: drop-shadow(0 0 5px #ff4b24);
+            }
         }
     }
 
@@ -199,8 +243,21 @@ html,#root{
         color: #ff4b24;
     }
 }
+.dish_img.active {
+    &:hover {
+        .add {
+            right: -50px;
+        }
+        .productCart {
+            transform: translateX(0%);
+        }
+    }
+}
 
 /* footer */
+#contactBtn{
+    background: #ff4b24;
+}
 #footer {
     background: #323232;
     margin-top: 50px;
@@ -220,9 +277,10 @@ html,#root{
 }
 
 /* Admin Sidebar */
-#Admin-content{
+#Admin-content {
     height: 100%;
 }
+
 #sidebar {
     padding: 20px 30px;
     height: 100%;
@@ -240,16 +298,17 @@ html,#root{
 #img-container {
     width: 200px;
     height: 120px;
-    & img{
+
+    & img {
         object-fit: contain;
     }
 }
 
-.category-list-img{
+.category-list-img {
     width: 80px;
     height: 80px;
 }
 
-.table-list td{
+.table-list td {
     align-content: center;
 }
