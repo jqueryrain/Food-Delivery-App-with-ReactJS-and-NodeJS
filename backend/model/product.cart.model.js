@@ -7,11 +7,13 @@ const product_cartSchema = new mongoose.Schema({
     },
     grandTotal: {
         type: mongoose.Schema.Types.Number,
-        required: true
+        required: true,
+        default: 0
     },
     items: {
         type: mongoose.Schema.Types.Array,
         required: true,
+        default: [],
         item: {
             product_id: {
                 type: mongoose.Schema.Types.ObjectId

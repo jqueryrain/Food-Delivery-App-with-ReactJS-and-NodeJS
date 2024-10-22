@@ -18,4 +18,5 @@ router.route('/product/:id?')
     .post(productImage.single('product_image'), productConttrollers.createProduct)
     .put(productImage.single('product_image'),productConttrollers.updateProduct)
     .delete(productConttrollers.deleteProduct)
+
 module.exports = router

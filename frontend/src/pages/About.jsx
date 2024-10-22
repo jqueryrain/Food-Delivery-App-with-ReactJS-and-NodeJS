@@ -23,7 +23,7 @@ function About() {
                     </p>
                 </div>
                 <div className="col-md-6 align-content-center">
-                    <img src={assets.aboutUs}
+                    <img src={assets.aboutUs} loading='lazy'
                     className='w-100' alt="" />
                 </div>
             </div>

@@ -1,13 +1,14 @@
 import axios from 'axios'
-import React, { useEffect } from 'react'
-import { useState } from 'react'
+import React from 'react'
+import { useState, useEffect } from 'react'
 import * as Yup from 'yup'
+import { useAuthenticateUserContext } from '../contexts/AuthenicateUser'
 
 function Login() {
     const [data, getData] = useState({})
     const [errors, setError] = useState({})
     const [message, setMessage] = useState('')
-    const [showModal, setModal] = useState(true)
+    const { showModal, setModal } = useAuthenticateUserContext()
 
     // To Form Validation Schema
     const userSchema = Yup.object({
@@ -31,9 +32,10 @@ function Login() {
 
                 // Handle the API Response
                 if (apiResponse.data.message === 'User Authenticated!') {
-                    setModal(false)
                     localStorage.setItem('authToken', apiResponse.data.token)
                     document.querySelector('.modal-backdrop').className = '';
+                    const token = localStorage.getItem('authToken')
+                    await axios.post('http://localhost:3000/api/create/product/cart', { token })
                 }
                 setMessage(apiResponse.data.message)
             }
@@ -43,15 +45,17 @@ function Login() {
             setError(Errors)
         }
     }
-    setTimeout(() => setModal(true), 800)
     return (
         <>
-            {showModal && (<div className="modal fade" id="loginModal" tabIndex="1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div className="modal fade"
+                id="loginModal"
+                tabIndex="1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div className="modal-dialog modal-dialog-centered">
                     <div className="modal-content">
                         <div className="modal-header">
                             <h1 className="modal-title fs-5" id="loginModal">Log In</h1>
-                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            <button type="button"
+                                className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div className="modal-body">
                             <form onSubmit={handleuserLogin}>
@@ -75,8 +79,7 @@ function Login() {
                         </div>
                         <div className='px-4 pb-4'>
                             <p>Have not account ?
-                                <button
-                                    type="button"
+                                <button type="button"
                                     data-bs-toggle="modal" data-bs-target="#exampleModal"
                                     className="loginbtn">
                                     Create Account here?</button>
@@ -84,8 +87,7 @@ function Login() {
                         </div>
                     </div>
                 </div>
-            </div>)
-            }
+            </div>
         </>
     )
 }
