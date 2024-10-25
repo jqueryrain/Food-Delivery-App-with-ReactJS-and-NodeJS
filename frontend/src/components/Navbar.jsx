@@ -1,9 +1,10 @@
 import React from 'react'
-import { NavLink,Link } from 'react-router-dom'
+import { NavLink, Link } from 'react-router-dom'
 import { assets } from '../assets/images/assets'
+import { useAuthenticateUserContext } from '../contexts/AuthenicateUser'
 
 const Navbar = () => {
-
+    const { setsignupModal } = useAuthenticateUserContext()
     return (
         <div className='container'>
             <div className="row py-4">
@@ -43,7 +44,7 @@ const Navbar = () => {
                         </li>
                         <li>
                             <button type='buton'
-                                data-bs-toggle="modal" data-bs-target="#exampleModal"
+                                onClick={() => setsignupModal(true)}
                                 className='signupbtn'>
                                 SignUp</button>
                         </li>

@@ -1,14 +1,17 @@
 import axios from 'axios'
 import React from 'react'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import * as Yup from 'yup'
+import Modal from 'react-modal'
 import { useAuthenticateUserContext } from '../contexts/AuthenicateUser'
+
+Modal.setAppElement('#root')
 
 function Login() {
     const [data, getData] = useState({})
     const [errors, setError] = useState({})
     const [message, setMessage] = useState('')
-    const { showModal, setModal } = useAuthenticateUserContext()
+    const { showlogin, setloginModal, setsignupModal } = useAuthenticateUserContext()
 
     // To Form Validation Schema
     const userSchema = Yup.object({
@@ -32,10 +35,9 @@ function Login() {
 
                 // Handle the API Response
                 if (apiResponse.data.message === 'User Authenticated!') {
+                    setError('')
+                    setloginModal(false)
                     localStorage.setItem('authToken', apiResponse.data.token)
-                    document.querySelector('.modal-backdrop').className = '';
-                    const token = localStorage.getItem('authToken')
-                    await axios.post('http://localhost:3000/api/create/product/cart', { token })
                 }
                 setMessage(apiResponse.data.message)
             }
@@ -47,49 +49,51 @@ function Login() {
     }
     return (
         <>
-            <div className="modal fade"
-                id="loginModal"
-                tabIndex="1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div className="modal-dialog modal-dialog-centered">
-                    <div className="modal-content">
-                        <div className="modal-header">
-                            <h1 className="modal-title fs-5" id="loginModal">Log In</h1>
-                            <button type="button"
-                                className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <div className='position-relative'>
+                <Modal className='bg-light p-5 rounded w-50 mx-auto position-absolute top-50 start-50 translate-middle'
+                    isOpen={showlogin}
+                >
+                    <div >
+                        <button type="button"
+                            className='btn btn-dark float-end'
+                            onClick={() => setloginModal(false)}
+                        >Close</button>
+                        <div className='d-flex  justify-content-between'>
+                            <h2 className='my-3'>Login</h2>
                         </div>
-                        <div className="modal-body">
-                            <form onSubmit={handleuserLogin}>
-                                <input type="text"
-                                    placeholder='Your Email'
-                                    className='form-control my-3'
-                                    required
-                                    onChange={(e) => { getData({ ...data, email: e.target.value }) }} />
-                                {errors.email && <div className="alert alert-danger mt-3 py-1" role="alert"> {errors.email} </div>}
+                        <form onSubmit={handleuserLogin}>
+                            <input type="text"
+                                placeholder='Your Email'
+                                className='form-control my-3'
+                                required
+                                onChange={(e) => { getData({ ...data, email: e.target.value }) }} />
+                            {errors.email && <div className="alert alert-danger mt-3 py-1" role="alert"> {errors.email} </div>}
 
-                                <input type="password"
-                                    placeholder='Your password'
-                                    className='form-control'
-                                    required
-                                    onChange={(e) => { getData({ ...data, password: e.target.value }) }} />
-                                {errors.password && <div className="alert alert-danger mt-3 py-1" role="alert"> {errors.password} </div>}
-                                {message == 'User Not Authenticated!' ? <div className="alert alert-danger mt-3 mb-0 py-1" role="alert"> {message} </div> : ''}
+                            <input type="password"
+                                placeholder='Your password'
+                                className='form-control'
+                                required
+                                onChange={(e) => { getData({ ...data, password: e.target.value }) }} />
+                            {errors.password && <div className="alert alert-danger mt-3 py-1" role="alert"> {errors.password} </div>}
+                            {message == 'User Not Authenticated!' ? <div className="alert alert-danger mt-3 mb-0 py-1" role="alert"> {message} </div> : ''}
 
-                                <button type='submit' className="btn w-100 createUser text-center my-3">Login</button>
-                            </form>
-                        </div>
-                        <div className='px-4 pb-4'>
-                            <p>Have not account ?
-                                <button type="button"
-                                    data-bs-toggle="modal" data-bs-target="#exampleModal"
-                                    className="loginbtn">
-                                    Create Account here?</button>
-                            </p>
-                        </div>
+                            <button type='submit' className="btn w-100 createUser text-center my-3">Login</button>
+                        </form>
                     </div>
-                </div>
+                    <div className='mt-3'>
+                        <p>Have not account ?
+                            <button type="button"
+                                onClick={() => {
+                                    setloginModal(false)
+                                    setsignupModal(true)
+                                }}
+                                className="loginbtn ms-2">
+                                Create Account here?</button>
+                        </p>
+                    </div>
+                </Modal>
             </div>
         </>
     )
 }
-
 export default Login

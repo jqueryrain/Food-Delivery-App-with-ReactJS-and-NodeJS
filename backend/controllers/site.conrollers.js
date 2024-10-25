@@ -44,7 +44,7 @@ module.exports = {
     userAuthenticate: async (req, res) => {
         try {
             const user = getUser(req.body.token)
-            if (!user) return res.json({ message: 'Not Found' })
+            if (!user) return res.json({ message: 'Please Login' })
             return res.json({ message: 'User Authenticated!' })
         } catch (error) {
             console.log('userAuthenticate : ' + error.message)
@@ -91,50 +91,6 @@ module.exports = {
             return res.status(200).json(data)
         } catch (error) {
             console.log('allProducts : ' + error.message)
-        }
-    },
-    createProductCart: async (req, res) => {
-        try {
-            const username = getUser(req.body.token)
-            const existingUserCart = await product_cartModel.find({ username })
-            if (!existingUserCart) await product_cartModel.create({ username })
-        } catch (error) {
-            console.log('createProductCart : ' + error.message)
-        }
-    },
-    updateCart: async (req, res) => {
-        try {
-            const username = getUser(req.body.token)
-            const items = req.body.items.map(item => {
-                return { product_id: new mongoose.Types.ObjectId(item.product_id) }
-            })
-            const data = await product_cartModel.updateOne(
-                { username },
-                { $set: { items } },
-                { new: true }
-            )
-        } catch (error) {
-            console.log('updateCart : ' + error.message)
-        }
-    },
-    getCartDetails: async (req, res) => {
-        try {
-            const username = getUser(req.body.token)
-            const data = await product_cartModel.aggregate([
-                { $match: { username } },
-                {
-                    $lookup: {
-                        from: 'products',
-                        localField: 'items.product_id',
-                        foreignField: '_id',
-                        as: 'product'
-                    }
-                }
-            ])
-            if (!data) return
-            return res.status(200).json(data)
-        } catch (error) {
-            console.log('getCartDetails : ' + error.message)
         }
     }
 }

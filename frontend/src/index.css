@@ -279,3 +279,22 @@ html,
 .table-list td {
     align-content: center;
 }
+
+/* cart Page */
+#product_quantity{
+    border-radius: 20px;
+    padding: 5px;
+    max-width: 30%;
+    background: #fff;
+    display: inline-flex;
+    justify-content: center;
+    & input{
+        padding: 0 2px;
+        border: 0;
+        width: 30%;
+    }
+    & button {
+        padding: 10px;
+        border: 0;
+    }
+}

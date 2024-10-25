@@ -18,9 +18,9 @@ function Dishes() {
             const newItem = { product_id: id }
             const updatedItems = [...items, newItem]
             setItems(updatedItems)
-            await axios.put(`http://localhost:3000/api/update/product/cart`, {
-                token, items: updatedItems
-            })
+            // await axios.put(`http://localhost:3000/api/update/product/cart`, {
+            //     token, items: updatedItems
+            // })
         }
     }
 
