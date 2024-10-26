@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { useDishContext } from '../contexts/DishesContext'
 import { assets } from '../assets/images/assets'
+import config from '../config/config'
 
 function Explore_menu() {
     const { setproducts, fetchProducts } = useDishContext()
@@ -52,7 +53,7 @@ function Explore_menu() {
                                     key={i}>
                                     <div className='menu_img mb-2'>
                                         <img
-                                            src={`http://localhost:3000/uploads/product_category_images/${menu.category_image}`}
+                                            src={`${config.Server_category_image_URL}/${menu.category_image}`}
                                             alt="" loading='lazy' />
                                     </div>
                                     <p className='menu_name text-center'>

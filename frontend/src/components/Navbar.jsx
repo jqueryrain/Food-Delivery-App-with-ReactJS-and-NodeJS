@@ -1,10 +1,11 @@
 import React from 'react'
 import { NavLink, Link } from 'react-router-dom'
+import { toast } from 'react-toastify'
 import { assets } from '../assets/images/assets'
 import { useAuthenticateUserContext } from '../contexts/AuthenicateUser'
 
 const Navbar = () => {
-    const { setsignupModal } = useAuthenticateUserContext()
+    const { showlogin, setsignupModal } = useAuthenticateUserContext()
     return (
         <div className='container'>
             <div className="row py-4">
@@ -38,15 +39,24 @@ const Navbar = () => {
                 <div className="col-md-4 d-none d-md-block align-content-center">
                     <ul className='d-flex gap-4 float-end'>
                         <li>
-                            <Link to='/cart'>
+                            {showlogin ? '' :<Link to='/cart'>
                                 <img src={assets.basket_icon} className='nav-icons' alt="" />
-                            </Link>
+                            </Link>}
                         </li>
                         <li>
-                            <button type='buton'
-                                onClick={() => setsignupModal(true)}
-                                className='signupbtn'>
-                                SignUp</button>
+                            {showlogin
+                                ? (<button type='buton'
+                                    onClick={() => setsignupModal(true)}
+                                    className='signupbtn'>
+                                    SignUp</button>)
+                                : (
+                                    <button type="button"
+                                        onClick={() => {
+                                            localStorage.removeItem('authToken')
+                                            toast.success('Your Are Logout')
+                                        }}
+                                        className='signupbtn'>Logout</button>
+                                )}
                         </li>
                     </ul>
                 </div>

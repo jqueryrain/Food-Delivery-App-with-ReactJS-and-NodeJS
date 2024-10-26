@@ -18,6 +18,10 @@ const orderSchema = new mongoose.Schema({
             },
             quantity: {
                 type: mongoose.Schema.Types.Number,
+            },
+            total: {
+                type: mongoose.Schema.Types.Number,
+                default: 0
             }
         }
     }

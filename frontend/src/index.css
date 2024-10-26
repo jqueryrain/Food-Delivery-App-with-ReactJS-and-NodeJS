@@ -32,7 +32,9 @@ html,
 #root {
     height: 100%;
 }
-
+.w-15{
+    width: 15%;
+}
 .divider {
     border-radius: 20px;
     width: 100%;
@@ -101,7 +103,7 @@ html,
     padding: 50px 20px 20px;
     height: 550px;
     border-radius: 20px;
-    background: url('./assets/images/header_img.png') no-repeat;
+    background: url('./assets/images/header_img.png') no-repeat center center;
     background-size: contain;
     position: relative;
 

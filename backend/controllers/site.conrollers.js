@@ -6,6 +6,7 @@ const bcrypt = require('bcryptjs')
 const { validationResult } = require('express-validator')
 const { setUser, getUser } = require('../services/auth')
 const mongoose = require('mongoose')
+const ObjectId = mongoose.Types.ObjectId;
 
 module.exports = {
     createUser: async (req, res) => {
@@ -91,6 +92,63 @@ module.exports = {
             return res.status(200).json(data)
         } catch (error) {
             console.log('allProducts : ' + error.message)
+        }
+    },
+    createProductCart: async (req, res) => {
+        try {
+            const previousItems = await product_cartModel.findOne({ username: getUser(req.body.token) })
+            const updatedItems = [...previousItems.items, { product_id: new ObjectId(req.body.Item.product_id) }]
+            const UserPorductCart = await product_cartModel.findOneAndUpdate(
+                { username: getUser(req.body.token) },
+                { items: updatedItems }
+            )
+            if (!UserPorductCart) return res.json(false)
+            return res.json(true)
+        } catch (error) {
+            console.log('createProductCart : ' + error.message)
+        }
+    },
+    getCartDetails: async (req, res) => {
+        try {
+            const username = getUser(req.body.token)
+            const data = await product_cartModel.aggregate([
+                {
+                    $match: { username }
+                },
+                {
+                    $lookup: {
+                        from: 'products',
+                        localField: 'items.product_id',
+                        foreignField: '_id',
+                        as: 'product'
+                    }
+                }
+            ])
+            if (data) {
+                return res.status(200).json(data)
+            } else {
+                return false
+            }
+        } catch (error) {
+            console.log('getCartDetails : ' + error.message)
+        }
+    },
+    deleteCartItem: async (req, res) => {
+        try {
+            const token = req.headers.authorization.split(' ')[1]
+            const userCart = await product_cartModel.findOne({ username: getUser(token) })
+            if (userCart) {
+                const updatedItems = userCart.items.filter(item => !item.product_id.equals(req.params.id))
+                const UserPorductCart = await product_cartModel.findOneAndUpdate(
+                    { username: getUser(token) },
+                    { items: updatedItems }
+                )
+                if (!UserPorductCart) return res.json(false)
+                return res.json(true)
+            }
+
+        } catch (error) {
+            console.log('deleteCartItem : ' + error.message)
         }
     }
 }

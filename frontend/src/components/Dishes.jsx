@@ -1,30 +1,32 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { assets } from '../assets/images/assets'
 import { useDishContext } from '../contexts/DishesContext'
 import axios from 'axios'
+import { toast } from 'react-toastify'
 import VerifyToken from '../Hooks/verifyToken'
 import { useAuthenticateUserContext } from '../contexts/AuthenicateUser'
+import config from '../config/config'
 
 function Dishes() {
-    const [quantity, setQuantity] = useState(1)
     const [items, setItems] = useState([])
     const { products } = useDishContext()
-    const { setModal } = useAuthenticateUserContext()
-    const token = localStorage.getItem('authToken')
+    const { setloginModal } = useAuthenticateUserContext()
 
     const addtoCart = async (id) => {
-        const itemExists = items.some(item => item.product_id === id)
-        if (!itemExists) {
-            const newItem = { product_id: id }
-            const updatedItems = [...items, newItem]
-            setItems(updatedItems)
-            // await axios.put(`http://localhost:3000/api/update/product/cart`, {
-            //     token, items: updatedItems
-            // })
+        const user = await VerifyToken()
+        if (!user) setloginModal(true)
+
+        const itemExists = items.every(item => item.product_id !== id)
+        const Item = { product_id: id }
+        setItems([...items, Item])
+        if (itemExists) {
+            const token = localStorage.getItem('authToken')
+            const response = await axios.post(`http://localhost:3000/api/product/cart`, {
+                token, Item
+            })
         }
     }
 
-    useEffect(() => { if (quantity < 0) setQuantity(0) }, [quantity])
     return (
         <div className="container">
             <div className="row">
@@ -39,7 +41,7 @@ function Dishes() {
                                     <div className="dishes h-100">
                                         <div className="dish_img">
                                             <img
-                                                src={`http://localhost:3000/uploads/productImages/${product.product_image}`}
+                                                src={`${config.Server_product_image_URL}/${product.product_image}`}
                                                 alt="" />
                                             <div className='quntitybtn'>
                                                 <button type='button'
