@@ -66,23 +66,23 @@ function ViewOrders() {
                                                 }}
                                                 className='form-select'>
                                                 {
-                                                    <option value={order.status} selected>
+                                                    <option defaultValue={order.status}>
                                                         {order.status}
                                                     </option>
                                                 }
                                                 {
                                                     order.status !== "delivered"
-                                                        ? <option value="delivered">Delivered</option>
+                                                        ? <option defaultValue="delivered">Delivered</option>
                                                         : ''
                                                 }
                                                 {
                                                     order.status !== "Out of Delivery"
-                                                        ? <option value="Out of Delivery">Out of Delivery</option>
+                                                        ? <option defaultValue="Out of Delivery">Out of Delivery</option>
                                                         : ''
                                                 }
                                                 {
                                                     order.status !== "processing"
-                                                        ? <option value="processing">Processing</option>
+                                                        ? <option defaultValue="processing">Processing</option>
                                                         : ''
                                                 }
                                             </select>

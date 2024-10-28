@@ -2,7 +2,10 @@ const express = require('express')
 const router = express.Router()
 const productConttrollers = require('../controllers/admin.controllers')
 const { categoryImage, productImage } = require('../middleware/multer.middleware')
+const adminControllers = require('../controllers/admin.controllers')
 
+router.post('/authenticate/admin', adminControllers.handleAdminLogin)
+router.post('/check/admin/token',adminControllers.verifyAdminToken)
 // Routes for product categories
 router.get('/get/product/category', productConttrollers.getAllcategoryData)
 router.route('/product/category/:id?')
@@ -20,5 +23,5 @@ router.route('/product/:id?')
     .delete(productConttrollers.deleteProduct)
 
 router.get('/view/orders', productConttrollers.getorders)
-router.put('/update/order/status/:id',productConttrollers.updateOrderStatus)
+router.put('/update/order/status/:id', productConttrollers.updateOrderStatus)
 module.exports = router

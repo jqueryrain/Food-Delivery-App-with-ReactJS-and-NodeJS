@@ -24,7 +24,7 @@ function Explore_menu() {
         fetchproCategories()
     }, [])
     return (
-        <div id='Explore_menu' className='container'>
+        <div id='Explore_menu' className='container mt-5'>
             <div className="row">
                 <div className="col-12">
                     <h2>Explore Our Menu</h2>

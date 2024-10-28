@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import { assets } from '../assets/images/assets'
 import { useDishContext } from '../contexts/DishesContext'
 import axios from 'axios'
-import { toast } from 'react-toastify'
 import VerifyToken from '../Hooks/verifyToken'
 import { useAuthenticateUserContext } from '../contexts/AuthenicateUser'
 import config from '../config/config'
@@ -34,7 +33,7 @@ function Dishes() {
                     <h2>Top dishes near you</h2>
                 </div>
                 <div className="col-12">
-                    <div className="row mt-3">
+                    <div className="row gap-3 mt-3">
                         {
                             products.map((product, i) => (
                                 <div className="col-md-3 dish" key={i}>

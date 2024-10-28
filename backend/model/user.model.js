@@ -14,6 +14,10 @@ const userSchema = mongoose.Schema({
         type: mongoose.SchemaTypes.String,
         required: true,
         unqiue: true
+    },
+    type:{
+        type: mongoose.SchemaTypes.String,
+        default: 'user'
     }
 })
 

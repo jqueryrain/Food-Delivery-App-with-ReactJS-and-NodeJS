@@ -62,7 +62,7 @@ function Login() {
                             <h2 className='my-3'>Login</h2>
                         </div>
                         <form onSubmit={handleuserLogin}>
-                            <input type="text"
+                            <input type="email"
                                 placeholder='Your Email'
                                 className='form-control my-3'
                                 required

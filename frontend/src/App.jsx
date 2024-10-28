@@ -1,4 +1,4 @@
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import { createBrowserRouter, RouterProvider, Routes,Route } from 'react-router-dom'
 import Home from './pages/Home'
 import AppLayout from './AppLayout'
 import Contact from './pages/Contact'
@@ -13,6 +13,7 @@ import Success from './pages/Success'
 import Cancel from './pages/Cancel'
 import NotFound from './pages/NotFound'
 import ViewOrders from './components/Admin/ViewOrders'
+import AdminLogin from './pages/AdminLogin'
 
 function App() {
   const router = createBrowserRouter([
@@ -54,6 +55,10 @@ function App() {
       path: '/admin',
       element: <AdminLayout />,
       children: [
+        {
+          path: '/admin/login',
+          element: <AdminLogin />
+        },
         {
           path: '/admin',
           element: <Admin />

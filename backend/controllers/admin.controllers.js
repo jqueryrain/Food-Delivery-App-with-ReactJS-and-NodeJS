@@ -1,11 +1,43 @@
-const  mongoose  = require('mongoose')
+const mongoose = require('mongoose')
+const bcrypt = require('bcryptjs')
 const product_orderModel = require('../model/product.order.model')
 const productModel = require('../model/product.model')
+const userModel = require('../model/user.model')
 const product_category = require('../model/product.category.model')
 const deleteImg = require('../services/deleteImg')
+const { getUser, setUser } = require('../services/auth')
 const ObjectId = mongoose.Types.ObjectId;
 
 module.exports = {
+    handleAdminLogin: async (req, res) => {
+        try {
+            const { email, password } = req.body.FormData;
+            const checkUserExists = await userModel.findOne({ email })
+            const isMatch = await bcrypt.compare(password, checkUserExists.password)
+
+            if (isMatch && checkUserExists.type == 'admin') {
+                const token = setUser(checkUserExists.username)
+                return res.status(200).json({ message: 'User Authenticated!', token })
+            } else {
+                return res.status(204).json({ message: 'User Not Authenticated!' })
+            }
+
+        } catch (error) {
+            console.log('handleAdminLogin : ' + error.message)
+        }
+    },
+    verifyAdminToken: async (req, res) => {
+        try {
+            const Admin = await userModel.findOne({ username: getUser(req.body.token) })
+            if (Admin && Admin.type == 'admin') {
+                return res.status(200).json({ message: 'User Authenticated!' })
+            } else {
+                return res.status(204).json({ message: 'User Not Authenticated!' })
+            }
+        } catch (error) {
+            console.log('verifyAdminToken : ' + error.message)
+        }
+    },
     createProductCategory: async (req, res) => {
         try {
             // create product category
