@@ -9,6 +9,10 @@ import Product_category from './components/Admin/Product_category'
 import AddFood from './components/Admin/AddFood'
 import ViewItems from './components/Admin/ViewItems'
 import Product_Cart from './pages/Product_Cart'
+import Success from './pages/Success'
+import Cancel from './pages/Cancel'
+import NotFound from './pages/NotFound'
+import ViewOrders from './components/Admin/ViewOrders'
 
 function App() {
   const router = createBrowserRouter([
@@ -31,6 +35,18 @@ function App() {
         {
           path: '/cart',
           element: <Product_Cart />
+        },
+        {
+          path: '/success',
+          element: <Success />
+        },
+        {
+          path: '/cancel',
+          element: <Cancel />
+        },
+        {
+          path: '*',
+          element: <NotFound />
         }
       ]
     },
@@ -53,6 +69,10 @@ function App() {
         {
           path: '/admin/view/items',
           element: <ViewItems />
+        },
+        {
+          path: '/admin/food/orders',
+          element: <ViewOrders />
         }
       ]
     }

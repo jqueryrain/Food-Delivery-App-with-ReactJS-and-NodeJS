@@ -13,6 +13,7 @@ import VerifyToken from './Hooks/verifyToken'
 function AppLayout() {
     const [showlogin, setloginModal] = useState(false)
     const [showsignup, setsignupModal] = useState(false)
+
     useEffect(() => {
         return async () => {
             const token = await VerifyToken()

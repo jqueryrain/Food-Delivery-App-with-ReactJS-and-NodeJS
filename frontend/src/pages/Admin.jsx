@@ -3,7 +3,13 @@ import React from 'react'
 function Admin() {
 
     return (
-        <h1>Welocme</h1>
+        <div className="container">
+            <div className="row">
+                <div className="col-12">
+                    <h1 className='my-4'>Welcome</h1>
+                </div>
+            </div>
+        </div>
     )
 }
 

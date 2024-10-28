@@ -6,6 +6,8 @@ const bcrypt = require('bcryptjs')
 const { validationResult } = require('express-validator')
 const { setUser, getUser } = require('../services/auth')
 const mongoose = require('mongoose')
+const productOrderModel = require('../model/product.order.model')
+const stripe = require('stripe')(`${process.env.STRIPE_SK}`)
 const ObjectId = mongoose.Types.ObjectId;
 
 module.exports = {
@@ -149,6 +151,82 @@ module.exports = {
 
         } catch (error) {
             console.log('deleteCartItem : ' + error.message)
+        }
+    },
+    updateCartItem: async (req, res) => {
+        try {
+            const token = req.headers.authorization.split(' ')[1]
+            const items = req.body.items.map(item => {
+                return {
+                    product_id: new ObjectId(item.id),
+                    total: item.total,
+                    quantity: item.quantity
+                }
+            })
+            const UserPorductCart = await product_cartModel.findOneAndUpdate(
+                { username: getUser(token) },
+                { items, grandTotal: req.body.grandTotal }
+            )
+            if (!UserPorductCart) return res.json(false)
+            return res.status(200).json({ grandTotal: UserPorductCart.grandTotal })
+        } catch (error) {
+            console.log('updateCartItem : ' + error.message)
+        }
+    },
+    makePayment: async (req, res) => {
+        try {
+            const data = await product_cartModel.aggregate([
+                { $match: { username: getUser(req.body.token) } },
+                {
+                    $lookup: {
+                        from: 'products', localField: 'items.product_id',
+                        foreignField: '_id', as: 'product'
+                    }
+                }
+            ])
+            if (data) {
+                const order = await productOrderModel.create({
+                    username: getUser(req.body.token),
+                    items: data[0].items,
+                    createdAt: new Date(),
+                    customerDetails: req.body.FormData,
+                    grandTotal: data[0].grandTotal
+                })
+                const linesItems = data[0].product.map((item, i) => ({
+                    price_data: {
+                        currency: 'usd',
+                        product_data: {
+                            name: item.product_name,
+                            images: [item.product_image],
+                        },
+                        unit_amount: item.product_price * 100,
+                    },
+                    quantity: data[0].items[i].quantity
+                }))
+                const paymentIntent = await stripe.checkout.sessions.create({
+                    line_items: linesItems,
+                    mode: 'payment',
+                    success_url: `http://localhost:5173/success?success=true&orderId=${order._id}`,
+                    cancel_url: `http://localhost:5173/cancel?success=false&orderId=${order._id}`,
+                    customer_email: 'demo@gmail.com'
+                })
+                res.status(200).json(paymentIntent)
+            }
+        } catch (error) {
+            console.log('makePayment : ' + error.message)
+        }
+    },
+    deleteOrder: async (req, res) => {
+        try {
+            const param1 = req.params.success;
+            const param2 = 'true';
+            if (param1 !== param2) {
+                await productOrderModel.findByIdAndDelete(
+                    { _id: new ObjectId(req.params.id) }
+                )
+            }
+        } catch (error) {
+            console.log('deleteOrder : ' + error.message)
         }
     }
 }

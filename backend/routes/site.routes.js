@@ -16,6 +16,9 @@ router.get('/get/products/by/category/:id', siteControllers.getProductsByCategor
 router.get('/get/products', siteControllers.allProducts)
 router.post('/product/cart', siteControllers.createProductCart)
 router.post('/get/product/cart', siteControllers.getCartDetails)
-router.put('/delete/product/cart/item/:id',siteControllers.deleteCartItem)
+router.put('/delete/product/cart/item/:id', siteControllers.deleteCartItem)
+router.put('/update/product/cart/items', siteControllers.updateCartItem)
+router.post('/payment', siteControllers.makePayment)
+router.delete('/delete/order/:id/:success',siteControllers.deleteOrder)
 
 module.exports = router

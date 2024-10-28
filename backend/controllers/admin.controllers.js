@@ -1,7 +1,9 @@
-const { mongoose } = require('mongoose')
+const  mongoose  = require('mongoose')
+const product_orderModel = require('../model/product.order.model')
 const productModel = require('../model/product.model')
 const product_category = require('../model/product.category.model')
 const deleteImg = require('../services/deleteImg')
+const ObjectId = mongoose.Types.ObjectId;
 
 module.exports = {
     createProductCategory: async (req, res) => {
@@ -194,6 +196,35 @@ module.exports = {
         } catch (error) {
             deleteImg(`productImages/${req.file?.filename}`)
             console.log('updateProduct : ' + error.message)
+        }
+    },
+    getorders: async (req, res) => {
+        try {
+            const data = await product_orderModel.aggregate([
+                {
+                    $lookup: {
+                        from: 'products',
+                        localField: 'items.product_id',
+                        foreignField: '_id',
+                        as: 'product'
+                    }
+                }
+            ])
+            if (data.length > 0) return res.status(200).json(data)
+        } catch (error) {
+            console.log('getorders : ' + error.message)
+        }
+    },
+    updateOrderStatus: async (req, res) => {
+        try {
+            const data = await product_orderModel.findByIdAndUpdate(
+                { _id: new ObjectId(req.params.id) },
+                { status: req.body.status }
+            )
+            if (!data) return res.status(204).json(false)
+            return res.status(200).json(true);
+        } catch (error) {
+            console.log('updateOrderStatus : ' + error.message)
         }
     }
 }

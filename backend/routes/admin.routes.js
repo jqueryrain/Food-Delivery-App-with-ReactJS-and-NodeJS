@@ -16,7 +16,9 @@ router.get('/get/products', productConttrollers.getAllProductData)
 router.route('/product/:id?')
     .get(productConttrollers.getSingleProduct)
     .post(productImage.single('product_image'), productConttrollers.createProduct)
-    .put(productImage.single('product_image'),productConttrollers.updateProduct)
+    .put(productImage.single('product_image'), productConttrollers.updateProduct)
     .delete(productConttrollers.deleteProduct)
 
+router.get('/view/orders', productConttrollers.getorders)
+router.put('/update/order/status/:id',productConttrollers.updateOrderStatus)
 module.exports = router

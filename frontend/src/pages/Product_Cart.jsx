@@ -1,42 +1,80 @@
 import React, { useEffect, useState, useRef } from 'react'
 import axios from 'axios'
-import { Elements } from '@stripe/react-stripe-js';
-import { loadStripe } from '@stripe/stripe-js'
+import Modal from 'react-modal'
 import config from '../config/config'
 import { toast } from 'react-toastify'
 import { assets } from '../assets/images/assets'
 import { useAuthenticateUserContext } from '../contexts/AuthenicateUser';
+import OrderForm from './OrderForm'
+
+Modal.setAppElement('#root')
 
 export default function Product_Cart() {
     const InputRef = useRef([])
+    const [amount, setAmount] = useState(0)
     const [cart, setCart] = useState([])
     const [Items, setItems] = useState(false)
     const [totalPrice, setTotalPrice] = useState([])
-    const [updatecart, Setupdatecart] = useState([])
+    const [quantity, setquantity] = useState([])
+    const [orderForm, setOrderForm] = useState(false)
     const { showlogin } = useAuthenticateUserContext()
 
     const handleQuantityChange = (i, item) => {
-        const price = item.product_price
-        const Quantity = parseInt(InputRef.current[i].value)
+        setAmount(0)
+
+        let price = item.product_price
+        let Quantity = parseInt(InputRef.current[i].value)
+
+        setquantity((prev) => {
+            const newquantity = [...prev]
+            newquantity[i] = Quantity
+            return newquantity
+        })
+
         setTotalPrice((prev) => {
             const newTotalPrices = [...prev]
             newTotalPrices[i] = Quantity * price;
             return newTotalPrices
         })
     }
-    const updateCart = () => {
-    }
 
+    const handleupdateCart = async () => {
+        const items = []
+        let grandTotal = 0;
+
+        const rows = document.querySelectorAll('.table-list')
+        rows.forEach(row => {
+            const id = row.dataset.id;
+            const quantity = parseInt(row.dataset.quantity || 1);
+            const total = parseInt(row.dataset.total)
+            grandTotal += total;
+            items.push({ id, quantity, total })
+        })
+
+        setAmount(grandTotal)
+        const token = localStorage.getItem('authToken')
+        if (token) {
+            const response = await axios.put(`${config.Server_URL}/update/product/cart/items`, { items, grandTotal }, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            })
+            if (response.status === 200) toast.success('updated')
+        }
+    }
 
     const deleteCartItem = async (id) => {
         const token = localStorage.getItem('authToken')
-        const response = await axios.put(`${config.Server_URL}/delete/product/cart/item/${id}`, {}, {
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        })
-        if (response.data) setItems(true)
+        if (token) {
+            const response = await axios.put(`${config.Server_URL}/delete/product/cart/item/${id}`, {}, {
+                headers: { Authorization: `Bearer ${token}` }
+            })
+            if (response.data) setItems(true)
+        }
     }
+
+    const closeForm = () => { setOrderForm(false) }
+
     useEffect(() => {
         return async () => {
             setItems(false)
@@ -49,6 +87,12 @@ export default function Product_Cart() {
     }, [Items, showlogin])
     return (
         <div className="container mt-4">
+            <div className='position-relative'>
+                <Modal className='bg-light p-5 rounded w-50 mx-auto position-absolute top-50 start-50 translate-middle'
+                    isOpen={orderForm}>
+                    <OrderForm FormChange={closeForm} />
+                </Modal>
+            </div>
             <div className="row">
                 <div className="col-12">
                     <table className='table'>
@@ -64,7 +108,10 @@ export default function Product_Cart() {
                         </thead>
                         <tbody>
                             {cart.product?.map((item, i) => (
-                                <tr key={i} className='table-list'>
+                                <tr key={i} className='table-list'
+                                    data-quantity={quantity[i]}
+                                    data-id={item._id}
+                                    data-total={totalPrice[i] ?? item.product_price * 1}>
                                     <td>
                                         <img src={`${config.Server_product_image_URL}/${item.product_image}`}
                                             alt="product"
@@ -80,18 +127,20 @@ export default function Product_Cart() {
                                         <p>${item.product_price}</p>
                                     </td>
                                     <td className='w-15'>
-                                        <div className='d-flex gap-3 justify-content-between'>
+                                        <div className='d-flex justify-content-around'>
                                             <button type="button"
                                                 onClick={() => {
                                                     const count = parseInt(InputRef.current[i].value) - 1
                                                     InputRef.current[i].value = count
                                                     if (count < 0) InputRef.current[i].value = 0
                                                     handleQuantityChange(i, item)
-                                                }}>
+                                                }}
+                                            >
                                                 -
                                             </button>
                                             <input type="text"
                                                 defaultValue={1}
+                                                readOnly
                                                 ref={(el) => InputRef.current[i] = el}
                                                 className='form-control text-center w-50' />
                                             <button type="button"
@@ -104,7 +153,7 @@ export default function Product_Cart() {
                                             </button>
                                         </div>
                                     </td>
-                                    <td>
+                                    <td >
                                         <p>
                                             ${totalPrice[i] ?? item.product_price * 1}
                                         </p>
@@ -121,7 +170,7 @@ export default function Product_Cart() {
                         </tbody>
                     </table>
                     <button type="button" className='btn btn-dark float-end mt-4'
-                        onClick={() => { updateCart() }}>
+                        onClick={() => { handleupdateCart() }}>
                         update cart
                     </button>
                 </div>
@@ -134,21 +183,22 @@ export default function Product_Cart() {
                     <ul>
                         <li className='d-flex justify-content-between mb-2'>
                             <p>SubTotal :</p>
-                            <p>$60</p>
-                        </li>
-                        <li className='d-flex justify-content-between mb-2'>
-                            <p>Delivery :</p>
-                            <p>$5</p>
+                            <p>${amount}</p>
                         </li>
                         <li className='d-flex justify-content-between mb-2'>
                             <p>Total :</p>
-                            <p>$65</p>
+                            <p>${amount}</p>
                         </li>
                     </ul>
-                    <button type="button"
-                        className='btn btn-danger mt-3'>
-                        Proceed To Checkout
-                    </button>
+                    {
+                        amount > 0 && (
+                            <button type="button"
+                                onClick={() => setOrderForm(true)}
+                                className='btn btn-danger mt-3'>
+                                Proceed To Checkout
+                            </button>
+                        )
+                    }
                 </div>
             </div>
         </div>
