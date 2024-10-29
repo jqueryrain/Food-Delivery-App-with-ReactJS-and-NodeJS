@@ -43,7 +43,6 @@ function Login() {
                 } else if (apiResponse.data.message === 'Not Found') {
                     toast.error(apiResponse.data.message)
                 }
-                // setMessage(apiResponse.data.message)
             }
         } catch (error) {
             const Errors = {}

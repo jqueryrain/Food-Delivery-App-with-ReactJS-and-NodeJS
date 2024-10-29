@@ -9,18 +9,19 @@ function ViewOrders() {
 
     const updateOrderStatus = async (id, status) => {
         const response = await axios.put(`${config.Server_admin_URL}/update/order/status/${id}`, { status })
-        if(response.data && response.status == 200) toast.success('Order status updated successfully')
+        if (response.data && response.status == 200) toast.success('Order status updated successfully')
     }
+
     useEffect(() => {
         return async () => {
             const response = await axios.get(`${config.Server_admin_URL}/view/orders`)
-            setorders(response.data)
+            if (response.data.length > 0) setorders(response.data)
         }
     }, [])
     return (
         <div className="container mt-3">
             <div className="row">
-                <div className="col-12">
+                <div className="col-md-12">
                     <h2 className='text-black mb-3'>Order Page</h2>
                     <ul>
                         {
@@ -31,7 +32,7 @@ function ViewOrders() {
                                             <img src={assets.parcel_icon} alt="" />
                                         </div>
                                         <div className="col-md-4 ps-3">
-                                            <ul className="d-flex gap-2 mb-3">
+                                            <ul className="d-flex flex-wrap gap-2 mb-3">
                                                 {
                                                     order.product.map((product, i) => (
                                                         <li key={i}>
@@ -61,28 +62,26 @@ function ViewOrders() {
                                         </div>
                                         <div className="col-md-2">
                                             <select name="status"
-                                                onChange={(e) => {
-                                                    updateOrderStatus(order._id, e.target.value)
-                                                }}
+                                                onChange={(e) => updateOrderStatus(order._id, e.target.value)}
                                                 className='form-select'>
                                                 {
-                                                    <option defaultValue={order.status}>
+                                                    <option value={order.status}>
                                                         {order.status}
                                                     </option>
                                                 }
                                                 {
                                                     order.status !== "delivered"
-                                                        ? <option defaultValue="delivered">Delivered</option>
+                                                        ? <option value="delivered">Delivered</option>
                                                         : ''
                                                 }
                                                 {
-                                                    order.status !== "Out of Delivery"
-                                                        ? <option defaultValue="Out of Delivery">Out of Delivery</option>
+                                                    order.status !== "Out of delivery"
+                                                        ? <option value="Out of delivery">Out of Delivery</option>
                                                         : ''
                                                 }
                                                 {
                                                     order.status !== "processing"
-                                                        ? <option defaultValue="processing">Processing</option>
+                                                        ? <option value="processing">Processing</option>
                                                         : ''
                                                 }
                                             </select>
