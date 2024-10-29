@@ -10,7 +10,7 @@ function Explore_menu() {
 
     const getProductbyCategory = async (id) => {
         setproducts([])
-        const response = await axios.get(`http://localhost:3000/api/get/products/by/category/${id}`)
+        const response = await axios.get(`${config.Server_URL}/get/products/by/category/${id}`)
         setproducts(response.data.categoryproducts)
     }
 
@@ -18,7 +18,7 @@ function Explore_menu() {
 
     useEffect(() => {
         const fetchproCategories = async () => {
-            const categories = await axios.get('http://localhost:3000/api/get/product/category')
+            const categories = await axios.get(`${config.Server_URL}/get/product/category`)
             setMenu(categories.data)
         }
         fetchproCategories()

@@ -4,6 +4,7 @@ import { useState } from 'react'
 import * as Yup from 'yup'
 import Modal from 'react-modal'
 import { useAuthenticateUserContext } from '../contexts/AuthenicateUser'
+import { toast } from 'react-toastify'
 
 Modal.setAppElement('#root')
 
@@ -15,7 +16,7 @@ function Login() {
 
     // To Form Validation Schema
     const userSchema = Yup.object({
-        email: Yup.string().email()
+        email: Yup.string().email().trim()
             .matches(/^[a-z0-9]+@gmail.com$/, 'Invalid email!'),
         password: Yup.string().trim()
             .min(6, 'password must be length of 6!')
@@ -30,16 +31,19 @@ function Login() {
         try {
             e.preventDefault()
             const response = await userSchema.validate(data, { abortEarly: false })
+
             if (response) {
                 const apiResponse = await axios.post('http://localhost:3000/api/user/login', data)
-
                 // Handle the API Response
                 if (apiResponse.data.message === 'User Authenticated!') {
+                    toast.success(apiResponse.data.message)
                     setError('')
                     setloginModal(false)
                     localStorage.setItem('authToken', apiResponse.data.token)
+                } else if (apiResponse.data.message === 'Not Found') {
+                    toast.error(apiResponse.data.message)
                 }
-                setMessage(apiResponse.data.message)
+                // setMessage(apiResponse.data.message)
             }
         } catch (error) {
             const Errors = {}
@@ -88,7 +92,8 @@ function Login() {
                                     setsignupModal(true)
                                 }}
                                 className="loginbtn ms-2">
-                                Create Account here?</button>
+                                Create Account here?
+                            </button>
                         </p>
                     </div>
                 </Modal>

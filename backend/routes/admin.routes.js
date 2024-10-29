@@ -6,6 +6,7 @@ const adminControllers = require('../controllers/admin.controllers')
 
 router.post('/authenticate/admin', adminControllers.handleAdminLogin)
 router.post('/check/admin/token',adminControllers.verifyAdminToken)
+
 // Routes for product categories
 router.get('/get/product/category', productConttrollers.getAllcategoryData)
 router.route('/product/category/:id?')

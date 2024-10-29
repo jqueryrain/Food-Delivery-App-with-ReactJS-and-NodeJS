@@ -24,7 +24,7 @@ function AppLayout() {
                 setloginModal(true)
             }
         }
-    }, [])
+    }, [showlogin])
     return (
         <>
             <ToastContainer />

@@ -20,7 +20,7 @@ function Dishes() {
         setItems([...items, Item])
         if (itemExists) {
             const token = localStorage.getItem('authToken')
-            const response = await axios.post(`http://localhost:3000/api/product/cart`, {
+            const response = await axios.post(`${config.Server_URL}/product/cart`, {
                 token, Item
             })
         }

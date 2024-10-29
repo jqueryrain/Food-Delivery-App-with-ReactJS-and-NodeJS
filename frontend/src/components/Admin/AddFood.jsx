@@ -4,6 +4,7 @@ import { assets } from '../../assets/images/assets'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import * as Yup from 'yup'
+import config from '../../config/config'
 
 function AddFood() {
     const [menu_list, setMenu] = useState([])
@@ -44,7 +45,7 @@ function AddFood() {
 
             // Validate Form
             await validateProductSchema.validate(dataObject, { abortEarly: false })
-            const response = await axios.post('http://localhost:3000/admin/api/product', formData)
+            const response = await axios.post(`${config.Server_admin_URL}/product`, formData)
             if (response.data.message === 'Unsuccessful!') toast.error(response.data.message)
             toast.success(response.data.message)
             setImage(`${assets.upload_img}`)
@@ -56,7 +57,7 @@ function AddFood() {
 
     useEffect(() => {
         const fetchproCategories = async () => {
-            const categories = await axios.get('http://localhost:3000/admin/api/get/product/category')
+            const categories = await axios.get(`${config.Server_admin_URL}/get/product/category`)
             setMenu(categories.data)
         }
         fetchproCategories()

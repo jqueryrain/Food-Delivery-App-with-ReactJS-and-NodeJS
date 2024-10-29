@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useProductContext } from '../../contexts/ProductContext'
 import axios from 'axios'
 import { toast } from 'react-toastify'
+import config from '../../config/config'
 
 function Modal() {
     const { product, updateproductImg } = useProductContext()
@@ -11,7 +12,7 @@ function Modal() {
 
 
     useEffect(() => {
-        setImage(`http://localhost:3000/uploads/productImages/${updateproductImg}`)
+        setImage(`${config.Server_product_image_URL}/${updateproductImg}`)
     }, [updateproductImg])
 
     const handleImageUpload = (e) => {
@@ -31,7 +32,7 @@ function Modal() {
         e.preventDefault()
         const formData = new FormData(e.target)
         if (checkupdatedImg == true) formData.append('product_image', showImg)
-        const response = await axios.put(`http://localhost:3000/admin/api/product/${product._id}`, formData)
+        const response = await axios.put(`${config.Server_admin_URL}/product/${product._id}`, formData)
         if (response.data.message == 'Successfully updated!') {
             toast.success(response.data.message)
         } else {
@@ -40,7 +41,7 @@ function Modal() {
     }
     useEffect(() => {
         const fetchproCategories = async () => {
-            const categories = await axios.get('http://localhost:3000/admin/api/get/product/category')
+            const categories = await axios.get(`${config.Server_admin_URL}/get/product/category`)
             setMenu(categories.data)
         }
         fetchproCategories()

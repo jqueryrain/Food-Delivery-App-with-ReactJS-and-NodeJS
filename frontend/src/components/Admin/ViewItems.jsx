@@ -1,6 +1,7 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
+import config from '../../config/config'
 import { useProductContext } from '../../contexts/ProductContext'
 
 function ViewItems() {
@@ -10,21 +11,21 @@ function ViewItems() {
 
 
     const fetchProducts = async () => {
-        const response = await axios.get('http://localhost:3000/admin/api/get/products')
+        const response = await axios.get(`${config.Server_admin_URL}/get/products`)
         if (response.data.message) toast.error(response.data.message)
         if (response.data.length > 0) setItems(response.data)
     }
 
     // To get Single Product data
     const getsingleproductData = async (id) => {
-        const response = await axios.get(`http://localhost:3000/admin/api/product/${id}`)
+        const response = await axios.get(`${config.Server_admin_URL}/product/${id}`)
         setproduct(response.data[0])
         setupdateproductImg(response.data[0].product_image)
     }
 
     // To delete product
     const deleteProduct = async (id) => {
-        const response = await axios.delete(`http://localhost:3000/admin/api/product/${id}`)
+        const response = await axios.delete(`${config.Server_admin_URL}/product/${id}`)
         if (response.data.message == 'Successfully Deleted!') {
             toast.success(response.data.message)
             setmessage(response.data.message)

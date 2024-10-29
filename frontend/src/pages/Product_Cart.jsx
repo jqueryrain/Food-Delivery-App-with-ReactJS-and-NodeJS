@@ -107,7 +107,7 @@ export default function Product_Cart() {
                             </tr>
                         </thead>
                         <tbody>
-                            {cart.product?.map((item, i) => (
+                            {cart?.product?.map((item, i) => (
                                 <tr key={i} className='table-list'
                                     data-quantity={quantity[i]}
                                     data-id={item._id}

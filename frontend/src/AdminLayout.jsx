@@ -4,6 +4,7 @@ import Header from './components/Admin/Header'
 import Sidebar from './components/Admin/Sidebar'
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
+import { toast } from 'react-toastify';
 import { ProductContextProvider } from './contexts/ProductContext';
 import Modal from './components/Admin/Modal';
 import AdminLogin from './pages/AdminLogin';
@@ -17,6 +18,12 @@ function AdminLayout() {
     const [LoginFrom, setLoginForm] = useState(false)
     const [isAuthenticated, setisAuthenticated] = useState(false)
 
+    const handleLogout = () => {
+        localStorage.removeItem('token')
+        toast.success('You are Logout')
+        setisAuthenticated(false)
+    }
+
     useEffect(() => {
         return async () => {
             const isAuthenticated = await VerifyAdmin()
@@ -27,11 +34,11 @@ function AdminLayout() {
                 navigate('/admin/login')
             }
         }
-    }, [])
+    }, [isAuthenticated])
     return (
         <>
             <ToastContainer />
-            <Header />
+            <Header authenticate={handleLogout} />
             <div id='Admin-content' className="container-fluid">
                 <div className="row h-100">
                     <div className="col-2 p-0">

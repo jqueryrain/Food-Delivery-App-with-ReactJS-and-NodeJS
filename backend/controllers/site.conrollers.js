@@ -33,12 +33,14 @@ module.exports = {
         try {
             const { email, password } = req.body;
             const checkUserExists = await userModel.findOne({ email })
+            if (!checkUserExists) return res.status(200).json({ message: 'NotFound' })
+
             const isMatch = await bcrypt.compare(password, checkUserExists.password)
             if (!isMatch) {
                 return res.json({ message: 'User Not Authenticated!' })
             } else {
                 const token = setUser(checkUserExists.username)
-                return res.json({ message: 'User Authenticated!', token })
+                return res.status(200).json({ message: 'User Authenticated!', token })
             }
         } catch (error) {
             console.log('loginUser  : ' + error.message)
@@ -99,13 +101,22 @@ module.exports = {
     createProductCart: async (req, res) => {
         try {
             const previousItems = await product_cartModel.findOne({ username: getUser(req.body.token) })
-            const updatedItems = [...previousItems.items, { product_id: new ObjectId(req.body.Item.product_id) }]
-            const UserPorductCart = await product_cartModel.findOneAndUpdate(
-                { username: getUser(req.body.token) },
-                { items: updatedItems }
-            )
-            if (!UserPorductCart) return res.json(false)
-            return res.json(true)
+            if (!previousItems) {
+                await product_cartModel.create({
+                    username: getUser(req.body.token),
+                    items: [{
+                        product_id: new ObjectId(req.body.Item.product_id)
+                    }]
+                })
+            } else {
+                const updatedItems = [...previousItems.items, { product_id: new ObjectId(req.body.Item.product_id) }]
+                const UserPorductCart = await product_cartModel.findOneAndUpdate(
+                    { username: getUser(req.body.token) },
+                    { items: updatedItems }
+                )
+                if (!UserPorductCart) return res.json(false)
+                return res.json(true)
+            }
         } catch (error) {
             console.log('createProductCart : ' + error.message)
         }
@@ -210,7 +221,7 @@ module.exports = {
                     cancel_url: `http://localhost:5173/cancel?success=false&orderId=${order._id}`,
                     customer_email: 'demo@gmail.com'
                 })
-                res.status(200).json(paymentIntent)
+                return res.status(200).json(paymentIntent)
             }
         } catch (error) {
             console.log('makePayment : ' + error.message)

@@ -2,12 +2,13 @@ import axios from 'axios'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import {useCategoryContext} from '../../contexts/CategoryContext'
+import config from '../../config/config'
 
 function CategoryList() {
     const { data, setState, setCategoryData,setupdatedImg } = useCategoryContext()
 
     const handledeletecategory = async (id) => {
-        const response = await axios.delete(`http://localhost:3000/admin/api/product/category/${id}`)
+        const response = await axios.delete(`${config.Server_admin_URL}/product/category/${id}`)
         if (response.data.message == 'Successfully deleted!') {
             toast.success(response.data.message)
             setState(true)
@@ -15,7 +16,7 @@ function CategoryList() {
     }
 
     const handlegetUpdateData = async (id) => {
-        const response = await axios.get(`http://localhost:3000/admin/api/product/category/${id}`)
+        const response = await axios.get(`${config.Server_admin_URL}/product/category/${id}`)
         setCategoryData(response.data)
         setupdatedImg(false)
     }
@@ -39,7 +40,7 @@ function CategoryList() {
                                 <td>
                                     <img
                                         className='category-list-img'
-                                        src={`http://localhost:3000/uploads/product_category_images/${category.category_image}`}
+                                        src={`${config.Server_category_image_URL}/${category.category_image}`}
                                         alt="" loading='lazy' />
                                 </td>
                                 <td>

@@ -5,6 +5,7 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
 import CategoryList from './CategoryList';
 import { CategoryContextProvider } from '../../contexts/CategoryContext';
+import config from '../../config/config';
 
 
 
@@ -20,7 +21,7 @@ function Product_category() {
 
     useEffect(() => {
         if (CategoryData.category_image != '') {
-            setImage(`http://localhost:3000/uploads/product_category_images/${CategoryData.category_image}`)
+            setImage(`${config.Server_category_image_URL}/${CategoryData.category_image}`)
         }
     }, [CategoryData])
 
@@ -41,7 +42,7 @@ function Product_category() {
         e.preventDefault()
         const formData = new FormData(e.target)
         formData.append('category_image', showImg)
-        const response = await axios.post('http://localhost:3000/admin/api/product/category', formData)
+        const response = await axios.post(`${config.Server_admin_URL}/product/category`, formData)
         if (response.data.message == 'Successfully created!') {
             toast.success(response.data.message)
             setImage(`${assets.upload_img}`)
@@ -56,7 +57,7 @@ function Product_category() {
         const id = CategoryData._id;
         const formData = new FormData(e.target)
         if (checkupdatedImg == true) formData.append('category_image', showImg)
-        const response = await axios.put(`http://localhost:3000/admin/api/product/category/${id}`, formData)
+        const response = await axios.put(`${config.Server_admin_URL}/product/category/${id}`, formData)
         if (response.data.message == 'update successful!') {
             toast.success(response.data.message)
             setState(true)
@@ -73,7 +74,7 @@ function Product_category() {
     setTimeout(() => { setState(false) }, 300)
     useEffect(() => {
         const fetchCategories = async () => {
-            const response = await axios.get('http://localhost:3000/admin/api/get/product/category')
+            const response = await axios.get(`${config.Server_admin_URL}/get/product/category`)
             setData(response.data)
             if (response.data.message) setData([])
         }

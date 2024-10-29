@@ -35,20 +35,20 @@ function ViewOrders() {
                                                 {
                                                     order.product.map((product, i) => (
                                                         <li key={i}>
-                                                            <p>{product.product_name} x {order.items[i].quantity}</p>
+                                                            <p className='fw-bold'>{product.product_name} x {order.items[i].quantity}</p>
                                                         </li>
                                                     ))
                                                 }
                                             </ul>
                                             <div>
-                                                <p>{order.customerDetails.name}</p>
-                                                <p>{order.customerDetails.email}</p>
+                                                <p className='fw-medium'>{order.customerDetails.name}</p>
+                                                <p className='fw-medium'>{order.customerDetails.email}</p>
                                                 <address className='my-2'>
                                                     {order.customerDetails.address},
                                                     {order.customerDetails.state},
                                                     {order.customerDetails.country}
                                                 </address>
-                                                <p>{order.customerDetails.phone}</p>
+                                                <p className='fw-normal'>{order.customerDetails.phone}</p>
                                             </div>
                                         </div>
                                         <div className="col-md-3">

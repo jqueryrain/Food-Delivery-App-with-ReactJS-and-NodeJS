@@ -3,6 +3,7 @@ import axios from 'axios'
 import * as Yup from 'yup'
 import Modal from 'react-modal'
 import { useAuthenticateUserContext } from '../contexts/AuthenicateUser'
+import config from '../config/config'
 
 function LoginModal() {
     const [data, getData] = useState({})
@@ -31,7 +32,7 @@ function LoginModal() {
         try {
             const res = await userSchema.validate(data, { abortEarly: false })
             if (res) {
-                const response = await axios.post('http://localhost:3000/api/create/user', data)
+                const response = await axios.post(`${config.Server_URL}/create/user`, data)
 
                 // Handle the API Response
                 if (response.data.message == 'Successful!') {
