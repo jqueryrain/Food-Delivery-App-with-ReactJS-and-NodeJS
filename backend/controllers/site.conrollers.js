@@ -71,7 +71,7 @@ module.exports = {
             const data = await product_category.aggregate([
                 {
                     $match: {
-                        _id: new mongoose.Types.ObjectId(req.params.id)
+                        _id: new ObjectId(req.params.id)
                     }
                 },
                 {
@@ -104,12 +104,12 @@ module.exports = {
             if (!previousItems) {
                 await product_cartModel.create({
                     username: getUser(req.body.token),
-                    items: [{
-                        product_id: new ObjectId(req.body.Item.product_id)
-                    }]
+                    items: [{ product_id: new ObjectId(req.body.Item.product_id) }]
                 })
             } else {
-                const updatedItems = [...previousItems.items, { product_id: new ObjectId(req.body.Item.product_id) }]
+                const updatedItems = [...previousItems.items,
+                { product_id: new ObjectId(req.body.Item.product_id) }
+                ]
                 const UserPorductCart = await product_cartModel.findOneAndUpdate(
                     { username: getUser(req.body.token) },
                     { items: updatedItems }
