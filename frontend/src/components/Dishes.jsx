@@ -33,7 +33,7 @@ function Dishes() {
                     <h2>Top dishes near you</h2>
                 </div>
                 <div className="col-12">
-                    <div className="row gap-3 mt-3">
+                    <div className="row mt-3">
                         {
                             products.map((product, i) => (
                                 <div className="col-md-3 dish" key={i}>

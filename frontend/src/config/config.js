@@ -4,7 +4,6 @@ const config = {
     Server_category_image_URL: String(import.meta.env.VITE_SERVER_CATEGORY_IMAGE_URL),
     Stripe_publish_key: String(import.meta.env.VITE_STRIPE_PUSBLISH_KEY),
     Stripe_secret_key: String(import.meta.env.VITE_STRIPE_SCERET_KEY),
-    Server_admin_URL:String(import.meta.env.VITE_SERVER_ADMIN_URL)
-
+    Server_admin_URL: String(import.meta.env.VITE_SERVER_ADMIN_URL)
 }
 export default config
