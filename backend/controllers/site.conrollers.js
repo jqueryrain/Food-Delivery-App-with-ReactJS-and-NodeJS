@@ -85,7 +85,7 @@ module.exports = {
                 },
                 { $project: { categoryproducts: 1 } }
             ])
-            return setTimeout(() => res.status(200).json(data[0]), 1800)
+            return res.status(200).json(data[0])
         } catch (error) {
             console.log('getProductsByCategory : ' + error.message)
         }
@@ -94,7 +94,7 @@ module.exports = {
         try {
             const data = await productModel.find({})
             if (!data) res.status(204).json({ message: 'Not Found' })
-            return  setTimeout(() => res.status(200).json(data), 1800)
+            return res.status(200).json(data)
         } catch (error) {
             console.log('allProducts : ' + error.message)
         }

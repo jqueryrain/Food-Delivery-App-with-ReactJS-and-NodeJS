@@ -5,14 +5,13 @@ import { assets } from '../assets/images/assets'
 import config from '../config/config'
 
 function Explore_menu() {
-    const { setproducts, fetchProducts, setloading } = useDishContext()
+    const { setproducts, fetchProducts } = useDishContext()
     const [menu_list, setMenu] = useState([])
 
     const getProductbyCategory = async (id) => {
         setproducts([])
         const response = await axios.get(`${config.Server_URL}/get/products/by/category/${id}`)
         setproducts(response.data.categoryproducts)
-        setloading(false)
     }
 
     useEffect(() => {
@@ -35,7 +34,6 @@ function Explore_menu() {
                     <div className='d-flex justify-content-between mt-4'>
                         <div className='menu w-100 d-flex flex-column align-items-center'
                             onClick={() => {
-                                setloading(true)
                                 fetchProducts()
                             }}>
                             <div className='menu_img mb-2'>
@@ -51,7 +49,6 @@ function Explore_menu() {
                             menu_list.map((menu, i) => (
                                 <div className='menu w-100 d-flex flex-column align-items-center'
                                     onClick={() => {
-                                        setloading(true)
                                         getProductbyCategory(menu._id)
                                     }}
                                     key={i}>
