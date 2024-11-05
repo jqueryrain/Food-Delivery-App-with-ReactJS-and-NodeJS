@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import Banner from '../components/banner'
+// import Banner from '../components/Banner.jsx'
 import Explore_menu from '../components/Explore-menu'
 import Dishes from '../components/Dishes'
 import axios from 'axios'
@@ -19,7 +19,7 @@ function Home() {
         }, [])
     return (
         <>
-            <Banner />
+            {/* <Banner /> */}
             <DishesContextProvider value={{ products, setproducts, fetchProducts}}>
                 <Explore_menu />
                 <ErrorBoundary>
