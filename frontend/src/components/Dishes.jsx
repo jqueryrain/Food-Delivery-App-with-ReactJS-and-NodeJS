@@ -5,10 +5,11 @@ import axios from 'axios'
 import VerifyToken from '../Hooks/verifyToken'
 import { useAuthenticateUserContext } from '../contexts/AuthenicateUser'
 import config from '../config/config'
+import Loader from './Loader'
 
 function Dishes() {
     const [items, setItems] = useState([])
-    const { products } = useDishContext()
+    const { products, loading } = useDishContext()
     const { setloginModal } = useAuthenticateUserContext()
 
     const addtoCart = async (id) => {
@@ -20,7 +21,7 @@ function Dishes() {
         setItems([...items, Item])
         if (itemExists) {
             const token = localStorage.getItem('authToken')
-            const response = await axios.post(`${config.Server_URL}/product/cart`, {
+            await axios.post(`${config.Server_URL}/product/cart`, {
                 token, Item
             })
         }
@@ -33,9 +34,10 @@ function Dishes() {
                     <h2>Top dishes near you</h2>
                 </div>
                 <div className="col-12">
-                    <div className="row mt-3">
-                        {
-                            products.map((product, i) => (
+                    <div className="row row-gap-5 mt-3">
+                        {loading
+                            ? <Loader />
+                            : products?.map((product, i) => (
                                 <div className="col-md-3 dish" key={i}>
                                     <div className="dishes h-100">
                                         <div className="dish_img">

@@ -32,15 +32,16 @@ module.exports = {
     loginUser: async (req, res) => {
         try {
             const { email, password } = req.body;
+
             const checkUserExists = await userModel.findOne({ email })
-            if (!checkUserExists) return res.status(200).json({ message: 'NotFound' })
+            if (!checkUserExists) return res.status(200).json({ message: 'Not Found' })
 
             const isMatch = await bcrypt.compare(password, checkUserExists.password)
-            if (!isMatch) {
-                return res.json({ message: 'User Not Authenticated!' })
-            } else {
+            if (isMatch) {
                 const token = setUser(checkUserExists.username)
-                return res.status(200).json({ message: 'User Authenticated!', token })
+                return res.status(200).json({ message: 'Authenticated!', token })
+            } else {
+                return res.json({ message: 'User Not Authenticated!' })
             }
         } catch (error) {
             console.log('loginUser  : ' + error.message)
@@ -84,7 +85,7 @@ module.exports = {
                 },
                 { $project: { categoryproducts: 1 } }
             ])
-            return res.status(200).json(data[0])
+            return setTimeout(() => res.status(200).json(data[0]), 1800)
         } catch (error) {
             console.log('getProductsByCategory : ' + error.message)
         }
@@ -93,7 +94,7 @@ module.exports = {
         try {
             const data = await productModel.find({})
             if (!data) res.status(204).json({ message: 'Not Found' })
-            return res.status(200).json(data)
+            return  setTimeout(() => res.status(200).json(data), 1800)
         } catch (error) {
             console.log('allProducts : ' + error.message)
         }

@@ -24,14 +24,14 @@ function AdminLogin() {
     return (
         <div className='position-relative'>
             <Modal className='position-absolute top-50 start-50 translate-middle'
-                isOpen={LoginFrom}
-            >
+                isOpen={LoginFrom}>
                 <form className="form" onSubmit={handleLogin}>
                     <p className="form-title">Sign in to your account</p>
                     <div className="input-container">
-                        <input placeholder="Enter email"
+                        <input
+                            placeholder="Enter email"
                             name='email'
-                            onChange={(e) => SetFormData({ ...FormData, email: e.target.value })}
+                            onChange={(e) => SetFormData({ ...FormData, email: e.target.value.trim() })}
                             type="email" />
                         <span>
                             <svg stroke="currentColor" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -40,15 +40,12 @@ function AdminLogin() {
                         </span>
                     </div>
                     <div className="input-container">
-                        <input placeholder="Enter password"
+                        <input
+                            placeholder="Enter password"
                             name='password'
-                            onChange={(e) => SetFormData({ ...FormData, password: e.target.value })}
+                            onChange={(e) => SetFormData({ ...FormData, password: e.target.value.trim() })}
                             type={showpassword ? 'text' : 'password'} />
-                        <span style={
-                            {
-                                cursor: 'pointer'
-                            }
-                        }
+                        <span style={{ cursor: 'pointer' }}
                             onClick={() => setshowpassword(prev => !prev)}>
                             <svg stroke="currentColor" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" strokeWidth="2" strokeLinejoin="round" strokeLinecap="round"></path>
@@ -56,7 +53,8 @@ function AdminLogin() {
                             </svg>
                         </span>
                     </div>
-                    <button className="submit"
+                    <button
+                        className="submit"
                         type="submit">
                         Sign in
                     </button>

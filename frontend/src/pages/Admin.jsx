@@ -1,18 +1,20 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import config from '../config/config'
+
+
 function Admin() {
     const [totalSales, setTotalSales] = useState(0)
-    const [item_price, setItem_price] = useState([])
+    const [item, setItem] = useState([])
 
     useEffect(() => {
         return async () => {
             setTotalSales(0)
-            setItem_price(0)
+            setItem(0)
             const response = await axios.get(`${config.Server_admin_URL}/view/orders`)
             response.data?.map(order => {
                 setTotalSales((prev) => prev + order.grandTotal)
-                setItem_price((prev) => prev + order.items.length)
+                setItem((prev) => prev + order.items.length)
             })
         }
     }, [])
@@ -37,7 +39,7 @@ function Admin() {
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1792 1792" fill="currentColor" height="20" width="20">
                                     <path d="M1408 1216q0 26-19 45t-45 19h-896q-26 0-45-19t-19-45 19-45l448-448q19-19 45-19t45 19l448 448q19 19 19 45z">
                                     </path>
-                                </svg> {Math.round(item_price / totalSales * 100)}%
+                                </svg> {Math.round(item / totalSales * 100)}%
                             </p>
                         </div>
                         <div className="data">
@@ -48,7 +50,7 @@ function Admin() {
                             <div className="range">
                                 <div className="fill" style={
                                     {
-                                        width: `${item_price / totalSales * 100}%`
+                                        width: `${item / totalSales * 100}%`
                                     }
                                 }>
                                 </div>

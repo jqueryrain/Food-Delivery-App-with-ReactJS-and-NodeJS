@@ -7,6 +7,7 @@ import { useProductContext } from '../../contexts/ProductContext'
 function ViewItems() {
     const [items, setItems] = useState([])
     const [message, setmessage] = useState('')
+    const [usercart, setusercart] = useState([])
     const { setproduct, setupdateproductImg } = useProductContext()
 
 
@@ -34,7 +35,18 @@ function ViewItems() {
         }
         setTimeout(() => { setmessage('') }, 10)
     }
+    
+    const orderedProductIds = new Set()
+    usercart.forEach(order => {
+        order.items.forEach(item => orderedProductIds.add(item.product_id))
+    })
 
+    useEffect(() => {
+        return async () => {
+            const response = await axios.get(`${config.Server_admin_URL}/view/orders`)
+            setusercart(response.data)
+        }
+    }, [])
     useEffect(() => { fetchProducts() }, [message])
     return (
         <div className="container mt-3">
@@ -52,6 +64,7 @@ function ViewItems() {
                         </thead>
                         <tbody>
                             {items.map((item, i) => (
+
                                 <tr key={i} className='table-list'>
                                     <td>{i + 1}</td>
                                     <td>{item.product_name}</td>
@@ -72,11 +85,13 @@ function ViewItems() {
                                                 className='btn  btn-primary'>
                                                 Edit
                                             </button>
-                                            <button type='button'
-                                                onClick={() => deleteProduct(item._id)}
-                                                className='btn  btn-danger'>
-                                                Delete
-                                            </button>
+                                            { orderedProductIds.has(item._id)
+                                                ? null
+                                                : <button type='button'
+                                                    onClick={() => deleteProduct(item._id)}
+                                                    className='btn btn-danger'>
+                                                    Delete
+                                                </button>}
                                         </div>
                                     </td>
                                 </tr>
