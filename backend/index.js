@@ -11,7 +11,7 @@ const siteRoutes = require('./routes/site.routes')
 app.use(cors())
 app.use(cors(
     {
-        origin: ['https://food-delivery-app-backend-flax.vercel.app/?vercelToolbarCode=Xz8wppFrlTjO3NV'],
+        origin: ['https://food-delivery-app-with-react-js-and-node-js.vercel.app'],
         credentials: true,
         methods: ['GET', 'POST', 'PUT', 'DELETE'],
     }
