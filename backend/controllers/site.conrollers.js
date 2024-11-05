@@ -93,7 +93,7 @@ module.exports = {
     allProducts: async (req, res) => {
         try {
             const data = await productModel.find({})
-            if (!data) res.status(204).json({ message: 'Not Found' })
+            if (!data) return res.status(204).json({ message: 'Not Found' })
             return res.status(200).json(data)
         } catch (error) {
             console.log('allProducts : ' + error.message)

@@ -14,7 +14,9 @@ function Home() {
         const response = await axios.get(`${config.Server_URL}/get/products`)
         if (response.data.length > 0) setproducts(response.data)
     }
-    useEffect(() => { fetchProducts() }, [])
+    useEffect(() => {
+         fetchProducts() 
+        }, [])
     return (
         <>
             <Banner />

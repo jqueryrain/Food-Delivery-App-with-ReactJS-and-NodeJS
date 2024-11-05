@@ -12,13 +12,13 @@ function Footer() {
                         <p className='text-white my-3 desc'>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quisquam neque architecto quaerat. Recusandae beatae laboriosam inventore eos iste repellendus minus eius tenetur quae ad, in nihil fuga odio. Doloremque, quisquam?</p>
                         <ul className='d-flex gap-3'>
                             <li>
-                                <img src={assets.facebook_icon} alt="" />
+                                <img src={assets.facebook_icon} alt="" loading='lazy' />
                             </li>
                             <li>
-                                <img src={assets.linkedin_icon} alt="" />
+                                <img src={assets.linkedin_icon} alt="" loading='lazy' />
                             </li>
                             <li>
-                                <img src={assets.twitter_icon} alt="" />
+                                <img src={assets.twitter_icon} alt="" loading='lazy' />
                             </li>
                         </ul>
                     </div>

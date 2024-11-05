@@ -54,13 +54,15 @@ function Product_category() {
     // Handle the updation of product category
     const handleupdatecategory = async (e) => {
         e.preventDefault()
+
         const id = CategoryData._id;
         const formData = new FormData(e.target)
         if (checkupdatedImg == true) formData.append('category_image', showImg)
+        formData.append('category_name', CategoryData.category_name)
         const response = await axios.put(`${config.Server_admin_URL}/product/category/${id}`, formData)
         if (response.data.message == 'update successful!') {
-            toast.success(response.data.message)
             setState(true)
+            toast.success(response.data.message)
         } else {
             toast.error(response.data.message)
         }
@@ -89,31 +91,37 @@ function Product_category() {
                         <div className="form-group">
                             <p className='mb-3 fw-bold'>Category Image</p>
                             <label htmlFor="category_img" id='img-container'>
-                                <img src={showImg}
+                                <img
+                                    src={showImg}
                                     alt=""
                                     id='showImg'
                                     loading='lazy'
                                     className='w-100 h-100' />
                             </label>
-                            <input type="file"
+                            <input
+                                type="file"
                                 name="category_image"
                                 id="category_img"
                                 onChange={handleImageUpload}
                                 hidden />
                         </div>
                         <div className="form-group mt-3">
-                            <label htmlFor="category"
+                            <label
+                                htmlFor="category"
                                 className='form-label fw-bold'>
                                 {CategoryData.category_image != '' ? 'update Product Category' : 'Enter Product Category'}
                             </label>
-                            <input type="text"
+                            <input
+                                type="text"
                                 name='category_name'
-                                defaultValue={CategoryData.category_name}
+                                value={CategoryData.category_name}
+                                onChange={(e) => setCategoryData({...CategoryData, category_name: e.target.value.trim() })}
                                 className="form-control"
                                 id='category' />
                         </div>
                         <div className="d-flex gap-3">
-                            <button type='sumbit'
+                            <button
+                                type='sumbit'
                                 className='btn btn-dark mt-3 px-2'>
                                 {CategoryData.category_image != '' ? 'update' : 'Add Category'}
                             </button>
@@ -123,7 +131,8 @@ function Product_category() {
                         type='button'
                         onClick={() => reset()}
                         className='btn btn-dark mt-3 px-2'>
-                        Reset</button>
+                        Reset
+                    </button>
                 </div>
             </div >
             <CategoryContextProvider value={{ data, setState, setCategoryData, setupdatedImg }} >

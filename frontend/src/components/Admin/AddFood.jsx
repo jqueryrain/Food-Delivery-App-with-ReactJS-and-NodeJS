@@ -20,15 +20,15 @@ function AddFood() {
     }
 
     const validateProductSchema = Yup.object({
-        product_name: Yup.string()
+        product_name: Yup.string().trim()
             .required('Enter Product Name'),
-        product_price: Yup.string()
+        product_price: Yup.string().trim()
             .required('Enter Product Price'),
-        product_description: Yup.string()
+        product_description: Yup.string().trim()
             .required('Enter Prouct Description'),
-        product_image: Yup.string()
+        product_image: Yup.string().trim()
             .required('upload product image'),
-        product_category_id: Yup.string()
+        product_category_id: Yup.string().trim()
             .required('select product category')
     })
 

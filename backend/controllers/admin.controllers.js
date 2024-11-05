@@ -95,6 +95,8 @@ module.exports = {
     },
     updateCategory: async (req, res) => {
         try {
+            console.log(req.body);
+
             const { category_name } = req.body;
             // Delete Previous Image if new image Exists
             if (req.file?.filename) {
@@ -105,7 +107,7 @@ module.exports = {
             // update product category
             const data = await product_category.findByIdAndUpdate(
                 { _id: new mongoose.Types.ObjectId(req.params.id) },
-                { category_name, category_image: req.file?.filename },
+                { category_name: category_name[0], category_image: req.file?.filename },
                 { new: true }
             )
             // if category not updated
