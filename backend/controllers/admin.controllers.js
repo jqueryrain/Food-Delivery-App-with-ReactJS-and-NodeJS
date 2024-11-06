@@ -127,7 +127,11 @@ module.exports = {
         try {
             const product_image = req.file?.filename;
             const { product_name, product_description, product_price, product_category_id } = req.body;
-            const data = await productModel.create({ product_name, product_description, product_price, product_category_id, product_image })
+            const data = await productModel.create(
+                {
+                    product_name, product_description, product_price,
+                    product_category_id: new ObjectId(product_category_id), product_image
+                })
             if (!data) {
                 deleteImg(`productImages/${req.file.filename}`)
                 return res.status(204).json({ message: 'Unsuccessfull!' })
