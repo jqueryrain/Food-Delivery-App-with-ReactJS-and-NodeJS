@@ -4,6 +4,7 @@ import * as Yup from 'yup'
 import Modal from 'react-modal'
 import { useAuthenticateUserContext } from '../contexts/AuthenicateUser'
 import { toast } from 'react-toastify'
+import config from '../config/config'
 
 Modal.setAppElement('#root')
 
@@ -32,7 +33,7 @@ function Login() {
 
             if (response) {
                 setError({})
-                const apiResponse = await axios.post('http://localhost:3000/api/user/login', data)
+                const apiResponse = await axios.post(`${config.Server_URL}/user/login`, data)
                 // Handle the API Response
                 if (apiResponse.data.message === 'Authenticated!') {
                     setError('')
