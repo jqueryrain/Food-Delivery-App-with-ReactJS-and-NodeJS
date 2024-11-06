@@ -12,7 +12,7 @@ app.use(cors())
 app.use(cors(
     {
         origin: ['https://fooddeliveryapp-smoky.vercel.app'],
-        methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+        methods: ['GET', 'POST', 'PUT', 'DELETE','OPTIONS'],
         credentials: true,
     }
 ))
@@ -26,4 +26,4 @@ app.use('/admin/api', AdminRoutes)
 app.use('/api', siteRoutes)
 
 
-app.listen('https://food-delivery-app-backend-flax.vercel.app', () => console.log('Running!'))
+app.listen('3000', () => console.log('Running!'))
