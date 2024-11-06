@@ -8,7 +8,7 @@ const siteRoutes = require('./routes/site.routes')
 
 
 // middleware
-app.use(cors())
+// app.use(cors())
 app.use(cors(
     {
         origin: ['https://food-delivery-app-with-react-js-and-node-js.vercel.app'],
