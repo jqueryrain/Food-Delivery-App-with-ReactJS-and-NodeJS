@@ -14,7 +14,8 @@ app.use(cors(
         origin: ['https://fooddeliveryapp-smoky.vercel.app'],
         methods: ['GET', 'POST', 'PUT', 'DELETE'],
         credentials: true,
-    }
+    },
+    res.setHeader('Access-Control-Allow-Origin', '*')
 ))
 app.use(cookie_parser())
 app.use(express.json())
