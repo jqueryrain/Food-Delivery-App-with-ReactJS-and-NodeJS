@@ -11,7 +11,7 @@ const siteRoutes = require('./routes/site.routes')
 app.use(cors())
 app.use(cors(
     {
-        origin: ['https://fooddeliveryapp-smoky.vercel.app'],
+        origin: ['https://tomato-03cl.onrender.com'],
         methods: ['GET', 'POST', 'PUT', 'DELETE','OPTIONS'],
         credentials: true,
     }
