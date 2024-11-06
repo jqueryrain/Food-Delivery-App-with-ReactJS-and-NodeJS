@@ -11,7 +11,7 @@ const siteRoutes = require('./routes/site.routes')
 app.use(cors())
 app.use(cors(
     {
-        origin: ['https://tomato-03cl.onrender.com'],
+        origin: ['*'],
         methods: ['GET', 'POST', 'PUT', 'DELETE','OPTIONS'],
         credentials: true,
     }
