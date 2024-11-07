@@ -41,12 +41,11 @@ function ViewItems() {
         order.items.forEach(item => orderedProductIds.add(item.product_id))
     })
 
-    useEffect(() => {
-        return async () => {
-            const response = await axios.get(`${config.Server_admin_URL}/view/orders`)
-            setusercart(response.data)
-        }
-    }, [])
+    const getorders = async () => {
+        const response = await axios.get(`${config.Server_admin_URL}/view/orders`)
+        setusercart(response.data)
+    }
+    useEffect(() => { getorders() }, [])
     useEffect(() => { fetchProducts() }, [message])
     return (
         <div className="container mt-3">

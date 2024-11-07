@@ -11,14 +11,12 @@ function ViewOrders() {
         const response = await axios.put(`${config.Server_admin_URL}/update/order/status/${id}`, { status })
         if (response.data && response.status == 200) toast.success('Order status updated successfully')
     }
+    const getorders = async () => {
+        const response = await axios.get(`${config.Server_admin_URL}/view/orders`)
+        if (response.data.length > 0) setorders(response.data)
+    }
 
-    useEffect(() => {
-        return async () => {
-            const response = await axios.get(`${config.Server_admin_URL}/view/orders`)
-            console.log(response.data)
-            if (response.data.length > 0) setorders(response.data)
-        }
-    }, [])
+    useEffect(() => { getorders() }, [])
     return (
         <div className="container mt-3">
             <div className="row">
