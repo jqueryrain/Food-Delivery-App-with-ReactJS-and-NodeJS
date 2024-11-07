@@ -2,6 +2,7 @@ import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 import config from '../../config/config'
+import Loader from '../Loader'
 import { useProductContext } from '../../contexts/ProductContext'
 
 function ViewItems() {
