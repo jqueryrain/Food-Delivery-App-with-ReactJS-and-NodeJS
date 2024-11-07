@@ -15,7 +15,7 @@ function ViewOrders() {
     useEffect(() => {
         return async () => {
             const response = await axios.get(`${config.Server_admin_URL}/view/orders`)
-            if (response.data.length > 0) setorders(response.data)
+            setorders(response.data)
         }
     }, [])
     return (
