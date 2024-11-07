@@ -113,7 +113,10 @@ export default function Product_Cart() {
                         </thead>
                         <tbody>
                             {loading
-                                ? <Loader />
+                                ? (<div className="mx-auto w-50 my-5">
+                                    <Loader />
+                                </div>
+                                )
                                 : cart?.product?.map((item, i) => (
                                     <tr key={i} className='table-list'
                                         data-quantity={quantity[i]}
