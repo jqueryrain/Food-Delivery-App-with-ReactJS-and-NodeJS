@@ -19,7 +19,8 @@ export default function Product_Cart() {
     const [quantity, setquantity] = useState([])
     const [orderForm, setOrderForm] = useState(false)
     const [loading, setloading] = useState(false)
-    const { showlogin } = useAuthenticateUserContext()
+
+    console.log(cart);
 
     const handleQuantityChange = (i, item) => {
         setAmount(0)
@@ -76,20 +77,19 @@ export default function Product_Cart() {
     }
 
     const closeForm = () => { setOrderForm(false) }
-
-    useEffect(() => {
-        return async () => {
-            setloading(true)
-            setItems(false)
-            const token = localStorage.getItem('authToken')
-            if (token) {
-                const response = await axios.post(`${config.Server_URL}/get/product/cart`, { token })
-                console.log(response.data[0]);
-                setCart(response.data[0])
-            }
-            setloading(false)
+    const productCartDetails = async () => {
+        setloading(true)
+        setItems(false)
+        const token = localStorage.getItem('authToken')
+        if (token) {
+            const response = await axios.post(`${config.Server_URL}/get/product/cart`, { token })
+            console.log(response.data[0]);
+            setCart(response.data[0])
         }
-    }, [Items, showlogin])
+        setloading(false)
+    }
+
+    useEffect(() => { productCartDetails() }, [Items])
     return (
         <div className="container mt-4">
             <div className='position-relative'>
