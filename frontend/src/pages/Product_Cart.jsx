@@ -112,75 +112,73 @@ export default function Product_Cart() {
                             </tr>
                         </thead>
                         <tbody>
-                            {loading
-                                ? (<div className="mx-auto w-50 my-5">
-                                    <Loader />
-                                </div>
-                                )
-                                : cart?.product?.map((item, i) => (
-                                    <tr key={i} className='table-list'
-                                        data-quantity={quantity[i]}
-                                        data-id={item._id}
-                                        data-total={totalPrice[i] ?? item.product_price * 1}>
-                                        <td>
-                                            <img src={`${config.Server_product_image_URL}/${item.product_image}`}
-                                                alt="product"
-                                                style={{
-                                                    width: '120px',
-                                                }}
-                                                className='img-fluid' />
-                                        </td>
-                                        <td>
-                                            <p>{item.product_name}</p>
-                                        </td>
-                                        <td>
-                                            <p>${item.product_price}</p>
-                                        </td>
-                                        <td className='w-15'>
-                                            <div className='d-flex justify-content-around'>
-                                                <button
-                                                    type="button"
-                                                    onClick={() => {
-                                                        const count = parseInt(InputRef.current[i].value) - 1
-                                                        InputRef.current[i].value = count
-                                                        if (count < 0) InputRef.current[i].value = 0
-                                                        handleQuantityChange(i, item)
-                                                    }}>
-                                                    -
-                                                </button>
-                                                <input
-                                                    type="text"
-                                                    defaultValue={1}
-                                                    readOnly
-                                                    ref={(el) => InputRef.current[i] = el}
-                                                    className='form-control text-center w-50' />
-                                                <button
-                                                    type="button"
-                                                    onClick={() => {
-                                                        const count = parseInt(InputRef.current[i].value) + 1
-                                                        InputRef.current[i].value = count
-                                                        handleQuantityChange(i, item)
-                                                    }}>
-                                                    +
-                                                </button>
-                                            </div>
-                                        </td>
-                                        <td >
-                                            <p>
-                                                ${totalPrice[i] ?? item.product_price * 1}
-                                            </p>
-                                        </td>
-                                        <td>
-                                            <button type="button"
-                                                onClick={() => { deleteCartItem(item._id) }}
-                                            >
-                                                <img src={assets.cross_icon} alt="" />
+                            {cart?.product?.map((item, i) => (
+                                <tr key={i} className='table-list'
+                                    data-quantity={quantity[i]}
+                                    data-id={item._id}
+                                    data-total={totalPrice[i] ?? item.product_price * 1}>
+                                    <td>
+                                        <img src={`${config.Server_product_image_URL}/${item.product_image}`}
+                                            alt="product"
+                                            style={{
+                                                width: '120px',
+                                            }}
+                                            className='img-fluid' />
+                                    </td>
+                                    <td>
+                                        <p>{item.product_name}</p>
+                                    </td>
+                                    <td>
+                                        <p>${item.product_price}</p>
+                                    </td>
+                                    <td className='w-15'>
+                                        <div className='d-flex justify-content-around'>
+                                            <button
+                                                type="button"
+                                                onClick={() => {
+                                                    const count = parseInt(InputRef.current[i].value) - 1
+                                                    InputRef.current[i].value = count
+                                                    if (count < 0) InputRef.current[i].value = 0
+                                                    handleQuantityChange(i, item)
+                                                }}>
+                                                -
                                             </button>
-                                        </td>
-                                    </tr>
-                                ))}
+                                            <input
+                                                type="text"
+                                                defaultValue={1}
+                                                readOnly
+                                                ref={(el) => InputRef.current[i] = el}
+                                                className='form-control text-center w-50' />
+                                            <button
+                                                type="button"
+                                                onClick={() => {
+                                                    const count = parseInt(InputRef.current[i].value) + 1
+                                                    InputRef.current[i].value = count
+                                                    handleQuantityChange(i, item)
+                                                }}>
+                                                +
+                                            </button>
+                                        </div>
+                                    </td>
+                                    <td >
+                                        <p>
+                                            ${totalPrice[i] ?? item.product_price * 1}
+                                        </p>
+                                    </td>
+                                    <td>
+                                        <button type="button"
+                                            onClick={() => { deleteCartItem(item._id) }}
+                                        >
+                                            <img src={assets.cross_icon} alt="" />
+                                        </button>
+                                    </td>
+                                </tr>
+                            ))}
                         </tbody>
                     </table>
+                    <div className='w-25 mx-auto my-5'>
+                        {loading ? <Loader /> : ''}
+                    </div>
                     <button type="button" className='btn btn-dark float-end mt-4'
                         onClick={() => { handleupdateCart() }}>
                         update cart

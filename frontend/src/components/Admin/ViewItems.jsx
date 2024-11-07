@@ -45,8 +45,8 @@ function ViewItems() {
         const response = await axios.get(`${config.Server_admin_URL}/view/orders`)
         setusercart(response.data)
     }
-    useEffect(() => { getorders() }, [])
     useEffect(() => { fetchProducts() }, [message])
+    useEffect(() => { getorders() }, [])
     return (
         <div className="container mt-3">
             <div className="row">

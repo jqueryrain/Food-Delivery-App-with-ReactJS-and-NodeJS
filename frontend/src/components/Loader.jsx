@@ -2,7 +2,7 @@ import React from 'react'
 
 export default function Loader() {
     return (
-        <div className="loadingspinner">
+        <div className="loadingspinner mx-auto">
             <div id="square1"></div>
             <div id="square2"></div>
             <div id="square3"></div>
