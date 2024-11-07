@@ -6,6 +6,7 @@ import 'react-toastify/dist/ReactToastify.css'
 import CategoryList from './CategoryList';
 import { CategoryContextProvider } from '../../contexts/CategoryContext';
 import config from '../../config/config';
+import Loader from '../Loader';
 
 
 
