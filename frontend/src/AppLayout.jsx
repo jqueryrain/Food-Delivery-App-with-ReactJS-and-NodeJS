@@ -9,7 +9,6 @@ import { AuthenticateUserProvider } from './contexts/AuthenicateUser'
 import 'react-toastify/dist/ReactToastify.css'
 import { useEffect } from 'react'
 import VerifyToken from './Hooks/verifyToken'
-import axios from 'axios'
 
 function AppLayout() {
     const [showlogin, setloginModal] = useState(false)

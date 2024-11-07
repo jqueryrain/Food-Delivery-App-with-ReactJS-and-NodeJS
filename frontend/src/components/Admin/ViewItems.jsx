@@ -35,7 +35,7 @@ function ViewItems() {
         }
         setTimeout(() => { setmessage('') }, 10)
     }
-    
+
     const orderedProductIds = new Set()
     usercart.forEach(order => {
         order.items.forEach(item => orderedProductIds.add(item.product_id))
@@ -85,9 +85,10 @@ function ViewItems() {
                                                 className='btn  btn-primary'>
                                                 Edit
                                             </button>
-                                            { orderedProductIds.has(item._id)
+                                            {orderedProductIds.has(item._id)
                                                 ? null
-                                                : <button type='button'
+                                                : <button
+                                                    type='button'
                                                     onClick={() => deleteProduct(item._id)}
                                                     className='btn btn-danger'>
                                                     Delete
