@@ -16,7 +16,7 @@ function AdminLayout() {
     const [product, setproduct] = useState({})
     const [updateproductImg, setupdateproductImg] = useState('')
     const [LoginFrom, setLoginForm] = useState(false)
-    const [isAuthenticated, setisAuthenticated] = useState(false)
+    const [isAuthenticated, setisAuthenticated] = useState(true)
 
     const handleLogout = () => {
         localStorage.removeItem('token')

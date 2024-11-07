@@ -71,7 +71,7 @@ function ViewItems() {
                                     <td>
                                         <img
                                             className='category-list-img w-50'
-                                            src={`http://localhost:3000/uploads/productImages/${item.product_image}`}
+                                            src={`${config.Server_admin_URL}/uploads/productImages/${item.product_image}`}
                                             alt="" loading='lazy' />
                                     </td>
                                     <td>
