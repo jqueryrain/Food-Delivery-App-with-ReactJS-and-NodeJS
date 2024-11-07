@@ -13,6 +13,7 @@ function Product_category() {
     const [showImg, setImage] = useState(`${assets.upload_img}`)
     const [data, setData] = useState([])
     const [state, setState] = useState(false)
+    const [loading, setloading] = useState(false)
     const [checkupdatedImg, setupdatedImg] = useState(false)
     const [CategoryData, setCategoryData] = useState({
         category_name: '',
@@ -76,8 +77,10 @@ function Product_category() {
     setTimeout(() => { setState(false) }, 300)
     useEffect(() => {
         const fetchCategories = async () => {
+            setloading(true)
             const response = await axios.get(`${config.Server_admin_URL}/get/product/category`)
             setData(response.data)
+            setloading(false)
             if (response.data.message) setData([])
         }
         fetchCategories()
@@ -115,7 +118,7 @@ function Product_category() {
                                 type="text"
                                 name='category_name'
                                 value={CategoryData.category_name}
-                                onChange={(e) => setCategoryData({...CategoryData, category_name: e.target.value.trim() })}
+                                onChange={(e) => setCategoryData({ ...CategoryData, category_name: e.target.value.trim() })}
                                 className="form-control"
                                 id='category' />
                         </div>
@@ -136,7 +139,7 @@ function Product_category() {
                 </div>
             </div >
             <CategoryContextProvider value={{ data, setState, setCategoryData, setupdatedImg }} >
-                <CategoryList />
+                {loading ? <Loader /> : <CategoryList />}
             </CategoryContextProvider>
         </>
     )
