@@ -27,7 +27,7 @@ function App() {
         },
         {
           path: '/about',
-          element: < About />
+          element: <About />
         },
         {
           path: '/contact',
