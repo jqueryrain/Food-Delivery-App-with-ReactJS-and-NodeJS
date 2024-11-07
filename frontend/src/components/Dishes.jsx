@@ -2,13 +2,14 @@ import React, { useState } from 'react'
 import { assets } from '../assets/images/assets'
 import { useDishContext } from '../contexts/DishesContext'
 import axios from 'axios'
+import Loader from '../components/Loader'
 import VerifyToken from '../Hooks/verifyToken'
 import { useAuthenticateUserContext } from '../contexts/AuthenicateUser'
 import config from '../config/config'
 
 function Dishes() {
     const [items, setItems] = useState([])
-    const { products } = useDishContext()
+    const { products, loading } = useDishContext()
     const { setloginModal } = useAuthenticateUserContext()
 
     const addtoCart = async (id) => {
@@ -33,36 +34,38 @@ function Dishes() {
                 </div>
                 <div className="col-12">
                     <div className="row row-gap-5 mt-3">
-                        {products?.map((product, i) => (
-                            <div className="col-md-3 dish" key={i}>
-                                <div className="dishes h-100">
-                                    <div className="dish_img">
-                                        <img
-                                            src={`${config.Server_product_image_URL}/${product.product_image}`}
-                                            alt="" />
-                                        <div className='quntitybtn'>
-                                            <button type='button'
-                                                onClick={() => addtoCart(product._id)}>
-                                                <img src={assets.add_icon_white} alt="" className='add' />
-                                            </button>
+                        {loading
+                            ? <Loader />
+                            : products?.map((product, i) => (
+                                <div className="col-md-3 dish" key={i}>
+                                    <div className="dishes h-100">
+                                        <div className="dish_img">
+                                            <img
+                                                src={`${config.Server_product_image_URL}/${product.product_image}`}
+                                                alt="" />
+                                            <div className='quntitybtn'>
+                                                <button type='button'
+                                                    onClick={() => addtoCart(product._id)}>
+                                                    <img src={assets.add_icon_white} alt="" className='add' />
+                                                </button>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div className='p-3'>
-                                        <div className='d-flex gap-2 flex-lg-row flex-column justify-content-between align-items-center mb-3'>
-                                            <h3 className='mb-0 text-center text-lg-start'>
-                                                {product.product_name}
-                                            </h3>
+                                        <div className='p-3'>
+                                            <div className='d-flex gap-2 flex-lg-row flex-column justify-content-between align-items-center mb-3'>
+                                                <h3 className='mb-0 text-center text-lg-start'>
+                                                    {product.product_name}
+                                                </h3>
+                                            </div>
+                                            <p className='desc'>
+                                                {product.product_description}
+                                            </p>
+                                            <p className='price mb-0'>
+                                                ${product.product_price}
+                                            </p>
                                         </div>
-                                        <p className='desc'>
-                                            {product.product_description}
-                                        </p>
-                                        <p className='price mb-0'>
-                                            ${product.product_price}
-                                        </p>
                                     </div>
                                 </div>
-                            </div>
-                        ))
+                            ))
                         }
                     </div>
                 </div>

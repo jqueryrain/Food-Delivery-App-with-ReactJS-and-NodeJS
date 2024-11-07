@@ -5,13 +5,15 @@ import { assets } from '../assets/images/assets'
 import config from '../config/config'
 
 function Explore_menu() {
-    const { setproducts, fetchProducts } = useDishContext()
+    const { setproducts, fetchProducts, setloading } = useDishContext()
     const [menu_list, setMenu] = useState([])
 
     const getProductbyCategory = async (id) => {
+        setloading(true)
         setproducts([])
         const response = await axios.get(`${config.Server_URL}/get/products/by/category/${id}`)
         setproducts(response.data.categoryproducts)
+        setloading(false)
     }
 
     useEffect(() => {

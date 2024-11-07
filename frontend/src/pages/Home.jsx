@@ -9,18 +9,21 @@ import ErrorBoundary from '../components/ErrorBoundary'
 
 function Home() {
     const [products, setproducts] = useState([])
+    const [loading, setloading] = useState(false)
 
     const fetchProducts = async () => {
+        setloading(true)
         const response = await axios.get(`${config.Server_URL}/get/products`)
         if (response.data.length > 0) setproducts(response.data)
+        setloading(false)
     }
     useEffect(() => {
-         fetchProducts() 
-        }, [])
+        fetchProducts()
+    }, [])
     return (
         <>
             <Banner />
-            <DishesContextProvider value={{ products, setproducts, fetchProducts}}>
+            <DishesContextProvider value={{ products, setproducts, fetchProducts, loading, setloading }}>
                 <Explore_menu />
                 <ErrorBoundary>
                     <Dishes />

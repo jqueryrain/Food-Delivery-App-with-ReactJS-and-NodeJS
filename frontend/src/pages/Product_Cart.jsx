@@ -59,7 +59,7 @@ export default function Product_Cart() {
                     Authorization: `Bearer ${token}`
                 }
             })
-            if (response.status === 200) toast.success('updated')
+            if (response && response.status === 200) toast.success('updated')
         }
     }
 
@@ -128,22 +128,24 @@ export default function Product_Cart() {
                                     </td>
                                     <td className='w-15'>
                                         <div className='d-flex justify-content-around'>
-                                            <button type="button"
+                                            <button
+                                                type="button"
                                                 onClick={() => {
                                                     const count = parseInt(InputRef.current[i].value) - 1
                                                     InputRef.current[i].value = count
                                                     if (count < 0) InputRef.current[i].value = 0
                                                     handleQuantityChange(i, item)
-                                                }}
-                                            >
+                                                }}>
                                                 -
                                             </button>
-                                            <input type="text"
+                                            <input
+                                                type="text"
                                                 defaultValue={1}
                                                 readOnly
                                                 ref={(el) => InputRef.current[i] = el}
                                                 className='form-control text-center w-50' />
-                                            <button type="button"
+                                            <button
+                                                type="button"
                                                 onClick={() => {
                                                     const count = parseInt(InputRef.current[i].value) + 1
                                                     InputRef.current[i].value = count

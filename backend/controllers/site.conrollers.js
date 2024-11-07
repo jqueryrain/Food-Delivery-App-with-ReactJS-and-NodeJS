@@ -114,7 +114,7 @@ module.exports = {
                 const UserPorductCart = await product_cartModel.findOneAndUpdate(
                     { username: getUser(req.body.token) },
                     { items: updatedItems }
-                )
+                ) 
                 if (!UserPorductCart) return res.json(false)
                 return res.json(true)
             }
