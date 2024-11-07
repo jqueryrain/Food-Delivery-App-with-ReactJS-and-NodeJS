@@ -3,17 +3,23 @@ import React, { useEffect, useState } from 'react'
 import config from '../../config/config'
 import { assets } from '../../assets/images/assets'
 import { toast } from 'react-toastify'
+import Loader from '../Loader'
 
 function ViewOrders() {
     const [orders, setorders] = useState([])
+    const [loading, setloading] = useState(false)
 
     const updateOrderStatus = async (id, status) => {
         const response = await axios.put(`${config.Server_admin_URL}/update/order/status/${id}`, { status })
         if (response.data && response.status == 200) toast.success('Order status updated successfully')
     }
     const getorders = async () => {
+        setloading(true)
         const response = await axios.get(`${config.Server_admin_URL}/view/orders`)
-        if (response.data.length > 0) setorders(response.data)
+        if (response.data.length > 0) {
+            setorders(response.data)
+            setloading(false)
+        }
     }
 
     useEffect(() => { getorders() }, [])
@@ -22,6 +28,7 @@ function ViewOrders() {
             <div className="row">
                 <div className="col-md-12">
                     <h2 className='text-black mb-3'>Order Page</h2>
+                    {loading ? <Loader /> : null}
                     <ul>
                         {
                             orders?.map((order, i) => (

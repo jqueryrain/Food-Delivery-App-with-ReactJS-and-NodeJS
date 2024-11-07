@@ -7,16 +7,18 @@ function Admin() {
     const [totalSales, setTotalSales] = useState(0)
     const [item, setItem] = useState([])
 
+    const reports = async () => {
+        setTotalSales(0)
+        setItem(0)
+        const response = await axios.get(`${config.Server_admin_URL}/view/orders`)
+        response.data?.map(order => {
+            setTotalSales((prev) => prev + order.grandTotal)
+            setItem((prev) => prev + order.items.length)
+        })
+    }
+
     useEffect(() => {
-        return async () => {
-            setTotalSales(0)
-            setItem(0)
-            const response = await axios.get(`${config.Server_admin_URL}/view/orders`)
-            response.data?.map(order => {
-                setTotalSales((prev) => prev + order.grandTotal)
-                setItem((prev) => prev + order.items.length)
-            })
-        }
+        reports()
     }, [])
 
     return (

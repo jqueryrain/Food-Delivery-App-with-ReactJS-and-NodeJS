@@ -8,13 +8,16 @@ function ViewItems() {
     const [items, setItems] = useState([])
     const [message, setmessage] = useState('')
     const [usercart, setusercart] = useState([])
+    const [loading, setloading] = useState(false)
     const { setproduct, setupdateproductImg } = useProductContext()
 
 
     const fetchProducts = async () => {
+        setloading(true)
         const response = await axios.get(`${config.Server_admin_URL}/get/products`)
         if (response.data.message) toast.error(response.data.message)
         if (response.data.length > 0) setItems(response.data)
+        setloading(false)
     }
 
     // To get Single Product data
@@ -41,12 +44,12 @@ function ViewItems() {
         order.items.forEach(item => orderedProductIds.add(item.product_id))
     })
 
-    const getorders = async () => {
+    const orders = async () => {
         const response = await axios.get(`${config.Server_admin_URL}/view/orders`)
         setusercart(response.data)
     }
     useEffect(() => { fetchProducts() }, [message])
-    useEffect(() => { getorders() }, [])
+    useEffect(() => { orders() }, [])
     return (
         <div className="container mt-3">
             <div className="row">
@@ -99,6 +102,7 @@ function ViewItems() {
                             }
                         </tbody>
                     </table>
+                    {loading ? <Loader /> : ''}
                 </div>
             </div>
         </div>

@@ -176,9 +176,7 @@ export default function Product_Cart() {
                             ))}
                         </tbody>
                     </table>
-                    <div className='w-25 mx-auto my-5'>
-                        {loading ? <Loader /> : ''}
-                    </div>
+                    {loading ? <Loader /> : ''}
                     <button type="button" className='btn btn-dark float-end mt-4'
                         onClick={() => { handleupdateCart() }}>
                         update cart
