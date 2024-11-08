@@ -249,10 +249,6 @@ html,
 }
 
 /* Admin Sidebar */
-#Admin-content {
-  height: 100%;
-}
-
 #sidebar {
   padding: 20px 30px;
   height: 100%;
@@ -306,7 +302,6 @@ html,
   }
 }
 
-/* From Uiverse.io by vinodjangid07 */
 .Btn {
   display: flex;
   align-items: center;
@@ -721,7 +716,6 @@ html,
   }
 }
 
-/* From Uiverse.io by Yaya12085 */
 .form {
   background-color: #fff;
   display: block;
