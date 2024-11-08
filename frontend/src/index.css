@@ -249,6 +249,10 @@ html,
 }
 
 /* Admin Sidebar */
+#Admin-content {
+  height: 100vh;
+}
+
 #sidebar {
   padding: 20px 30px;
   height: 100%;

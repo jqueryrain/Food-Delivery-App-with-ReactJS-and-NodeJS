@@ -44,7 +44,7 @@ function AdminLayout() {
                     <div className="col-2 p-0">
                         <Sidebar />
                     </div>
-                    <div className="col-md-10 h-100">
+                    <div className="col-md-10">
                         <ProductContextProvider value={{ product, setproduct, updateproductImg, setupdateproductImg, setisAuthenticated, LoginFrom, setLoginForm }}>
                             {isAuthenticated
                                 ? <Outlet />
