@@ -12,9 +12,6 @@ const Navbar = () => {
                 <div className="col-md-4 col-6">
                     <img src={assets.logo} alt="" />
                 </div>
-                <div className="col-6 d-block d-md-none">
-                    <img src={assets.bars} alt="" className='menu float-end' />
-                </div>
                 <div className="col-md-4 d-none d-md-block align-content-center">
                     <ul className='d-flex justify-content-center gap-3'>
                         <li>
@@ -36,7 +33,7 @@ const Navbar = () => {
                         </li>
                     </ul>
                 </div>
-                <div className="col-md-4 d-none d-md-block">
+                <div className="col-md-4 col-6">
                     <ul className='d-flex gap-4 float-end align-items-center'>
                         <li>
                             {showlogin ? '' : <Link to='/cart'>

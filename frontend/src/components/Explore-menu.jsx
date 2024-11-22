@@ -32,18 +32,18 @@ function Explore_menu() {
                 </div>
             </div>
             <div className="row justify-content-between">
-                <div className="col-md-1 col-6">
+                <div className="col-md-2 col-6">
                     <div className='menu w-100'
                         onClick={() => { fetchProducts() }}>
                         <div className='menu_img mb-2 mx-auto'>
                             <img src={assets.menu_1} alt="" loading='lazy' />
                         </div>
-                        <p className='menu_name text-center'> All</p>
+                        <p className='menu_name text-center'>All</p>
                     </div>
                 </div>
                 {
                     menu_list.map((menu, i) => (
-                        <div className="col-md-1 col-6">
+                        <div className="col-md-2 col-6">
                             <div className='menu w-100'
                                 onClick={() => { getProductbyCategory(menu._id) }}
                                 key={i}>
