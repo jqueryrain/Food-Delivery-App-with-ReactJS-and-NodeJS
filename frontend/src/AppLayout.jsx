@@ -25,7 +25,7 @@ function AppLayout() {
     }, [])
     return (
         <>
-            <div className="container-fluid m-0 p-0">
+            <div className="container m-0 p-0">
                 <div className="row">
                     <div className="col-12">
                         <ToastContainer />
