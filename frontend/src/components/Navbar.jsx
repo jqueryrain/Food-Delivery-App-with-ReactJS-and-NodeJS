@@ -10,7 +10,9 @@ const Navbar = () => {
         <div className='container'>
             <div className="row py-4">
                 <div className="col-md-4 col-6">
-                    <img src={assets.logo} alt="" />
+                   <Link to='/'>
+                   <img src={assets.logo} alt="" />
+                   </Link>
                 </div>
                 <div className="col-md-4 d-none d-md-block align-content-center">
                     <ul className='d-flex justify-content-center gap-3'>

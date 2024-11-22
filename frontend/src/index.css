@@ -2,16 +2,19 @@
   padding: 0;
   margin: 0;
   box-sizing: border-box;
+  border: 1px solid #000;
 }
 
-
+body{
+  width: 100vw;
+  max-width: 100%;
+}
 
 ul {
   list-style: none;
   margin-bottom: 0;
   padding: 0;
 }
-
 a,
 span {
   text-decoration: none;
@@ -26,11 +29,6 @@ button {
   cursor: pointer;
   border: none;
   background: none;
-}
-
-html,
-#root {
-  height: 100%;
 }
 
 .w-15 {
@@ -231,6 +229,7 @@ html,
 }
 
 #footer {
+  width: 100%;
   background: #323232;
   padding-block: 20px;
   margin-top: 50px;

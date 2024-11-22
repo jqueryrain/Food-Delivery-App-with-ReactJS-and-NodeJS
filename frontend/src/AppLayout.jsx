@@ -13,7 +13,6 @@ import VerifyToken from './Hooks/verifyToken'
 function AppLayout() {
     const [showlogin, setloginModal] = useState(false)
     const [showsignup, setsignupModal] = useState(false)
-    // axios.defaults.withCredentials = true;
     useEffect(() => {
         return async () => {
             const token = await VerifyToken()
@@ -26,14 +25,20 @@ function AppLayout() {
     }, [])
     return (
         <>
-            <ToastContainer />
-            <AuthenticateUserProvider value={{ showlogin, setloginModal, showsignup, setsignupModal }}>
-                <Navbar />
-                <LoginModal />
-                <Modal />
-                <Outlet />
-                <Footer />
-            </AuthenticateUserProvider>
+            <div className="container-fluid m-0 p-0">
+                <div className="row">
+                    <div className="col-12">
+                        <ToastContainer />
+                        <AuthenticateUserProvider value={{ showlogin, setloginModal, showsignup, setsignupModal }}>
+                            <Navbar />
+                            <LoginModal />
+                            <Modal />
+                            <Outlet />
+                            <Footer />
+                        </AuthenticateUserProvider>
+                    </div>
+                </div>
+            </div>
         </>
     )
 }
