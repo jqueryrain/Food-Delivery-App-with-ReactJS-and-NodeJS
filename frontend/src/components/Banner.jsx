@@ -4,7 +4,7 @@ export default function Banner() {
     return (
         <div className="container mt-4">
             <div className="row">
-                <div id='banner' className='col-12'>
+                <div id='banner' className='col-md-12'>
                     <div id="banner_image w-100"></div>
                     <div className='content'>
                         <h1 className='text-white'>Order Your favourite Food From Here</h1>

@@ -33,11 +33,11 @@ function Dishes() {
                     <h2>Top dishes near you</h2>
                 </div>
                 <div className="col-12">
-                    <div className="row row-gap-5 mt-3">
+                    <div className="row row-gap-4 mt-3">
                         {loading
                             ? <Loader />
                             : products?.map((product, i) => (
-                                <div className="col-md-3 dish" key={i}>
+                                <div className="col-md-3 col-sm-6 col-12 px-sm-2 px-5 dish" key={i}>
                                     <div className="dishes h-100">
                                         <div className="dish_img">
                                             <img

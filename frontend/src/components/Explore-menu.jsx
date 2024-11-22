@@ -31,42 +31,34 @@ function Explore_menu() {
                     <p className='w-75'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Beatae dolore ea omnis enim a eius cum veritatis delectus facilis quos!</p>
                 </div>
             </div>
-            <div className="row">
-                <div className="col-12">
-                    <div className='d-flex justify-content-between mt-4'>
-                        <div className='menu w-100 d-flex flex-column align-items-center'
-                            onClick={() => {
-                                fetchProducts()
-                            }}>
-                            <div className='menu_img mb-2'>
-                                <img
-                                    src={assets.menu_1}
-                                    alt="" loading='lazy' />
-                            </div>
-                            <p className='menu_name text-center'>
-                                All
-                            </p>
+            <div className="row justify-content-between">
+                <div className="col-md-1 col-6">
+                    <div className='menu w-100'
+                        onClick={() => { fetchProducts() }}>
+                        <div className='menu_img mb-2 mx-auto'>
+                            <img src={assets.menu_1} alt="" loading='lazy' />
                         </div>
-                        {
-                            menu_list.map((menu, i) => (
-                                <div className='menu w-100 d-flex flex-column align-items-center'
-                                    onClick={() => {
-                                        getProductbyCategory(menu._id)
-                                    }}
-                                    key={i}>
-                                    <div className='menu_img mb-2'>
-                                        <img
-                                            src={`${config.Server_category_image_URL}/${menu.category_image}`}
-                                            alt="" loading='lazy' />
-                                    </div>
-                                    <p className='menu_name text-center'>
-                                        {menu.category_name}
-                                    </p>
-                                </div>
-                            ))
-                        }
+                        <p className='menu_name text-center'> All</p>
                     </div>
                 </div>
+                {
+                    menu_list.map((menu, i) => (
+                        <div className="col-md-1 col-6">
+                            <div className='menu w-100'
+                                onClick={() => { getProductbyCategory(menu._id) }}
+                                key={i}>
+                                <div className='menu_img mb-2 mx-auto'>
+                                    <img
+                                        src={`${config.Server_category_image_URL}/${menu.category_image}`}
+                                        alt="" loading='lazy' />
+                                </div>
+                                <p className='menu_name text-center'>
+                                    {menu.category_name}
+                                </p>
+                            </div>
+                        </div>
+                    ))
+                }
             </div>
             <div className='divider'></div>
         </div>

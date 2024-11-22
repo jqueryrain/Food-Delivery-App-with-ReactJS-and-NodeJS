@@ -229,9 +229,14 @@ html,
 #contactBtn {
   background: #ff4b24;
 }
-
+.container{
+  border: 1px solid red;
+}
 #footer {
+  border: 1px solid red;
+  width: 100% !important;
   background: #323232;
+  padding-block: 20px;
   margin-top: 50px;
 
   .desc {
