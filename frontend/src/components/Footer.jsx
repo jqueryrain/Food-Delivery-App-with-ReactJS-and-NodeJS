@@ -7,9 +7,10 @@ function Footer() {
         <div id='footer'>
             <div className='container'>
                 <div className="row row-gap-2">
-                    <div className="col-md-4 col-12">
+                    <div className="col-md-4 col-6 p-2">
                         <img src={assets.logo} alt="" />
-                        <p className='text-white my-3 desc'>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quisquam neque architecto quaerat. Recusandae beatae laboriosam inventore eos iste repellendus minus eius tenetur quae ad, in nihil fuga odio. Doloremque, quisquam?</p>
+                        <p className='text-white my-3 desc word-wrap'>Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+                            Quisquam neque architecto quaerat. Recusandae beatae laboriosam inventore eos iste repellendus minus eius tenetur.</p>
                         <ul className='d-flex gap-3'>
                             <li>
                                 <img src={assets.facebook_icon} alt="" loading='lazy' />
@@ -22,7 +23,7 @@ function Footer() {
                             </li>
                         </ul>
                     </div>
-                    <div className="col-md-4">
+                    <div className="col-md-4 col-6 p-2">
                         <div className='w-50 mx-md-auto'>
                             <h4 className='text-white'>Company</h4>
                             <ul className='d-flex flex-column gap-2 my-3'>
@@ -38,7 +39,7 @@ function Footer() {
                             </ul>
                         </div>
                     </div>
-                    <div className="col-md-4">
+                    <div className="col-md-4 col-6 p-2">
                         <h4 className='text-white'>Get in Touch</h4>
                         <ul className='d-flex flex-column gap-2 my-3'>
                             <li className='footer-links'>+91 8472372321</li>
