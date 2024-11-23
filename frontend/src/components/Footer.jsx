@@ -4,9 +4,9 @@ import { Link } from 'react-router-dom'
 
 function Footer() {
     return (
-        <div id='footer'>
+        <div id='footer' >
             <div className='container'>
-                <div className="row row-gap-2">
+                <div className="row row-gap-2 px-3">
                     <div className="col-md-4 col-6 p-2">
                         <img src={assets.logo} alt="" />
                         <p className='text-white my-3 desc word-wrap'>Lorem ipsum dolor sit, amet consectetur adipisicing elit.
